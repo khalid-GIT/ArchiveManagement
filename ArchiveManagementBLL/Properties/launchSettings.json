@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "ArchiveManagement.BLL": {
+      "commandName": "Project"
+    },
+    "Profil 1": {
+      "commandName": "Project"
+    },
+    "Profil 2": {
+      "commandName": "Executable"
+    }
+  }
+}
