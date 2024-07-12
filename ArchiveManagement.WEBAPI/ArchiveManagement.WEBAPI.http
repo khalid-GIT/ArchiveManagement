@@ -1,0 +1,6 @@
+@ArchiveManagement.WEBAPI_HostAddress = http://localhost:5185
+
+GET {{ArchiveManagement.WEBAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
