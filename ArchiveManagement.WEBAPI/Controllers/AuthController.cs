@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using ArchiveManagement.BLL.Interfaces;
 using ArchiveManagement.BLL.Dtos;
+using System.Security.Claims;
 
 //using Microsoft.AspNetCore.Identity;
 //using Microsoft.AspNetCore.Identity;
@@ -82,37 +83,49 @@ namespace ArchiveManagement.WEBAPI.Controllers
             }
             return BadRequest("Bad data");
         }
-        //    [HttpPost("ChangePassword")]
-        //    public async Task<IActionResult> ChangePassword(ChangePasswordBindingModel model)
-        //    {
+        [HttpPost("ChangePassword")]
+        public async Task<IActionResult> ChangePassword(ChangePasswordBindingModel model)
+        {
+            //    var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-        //        //if (!ModelState.IsValid)
-        //        //{
-        //        //    return BadRequest(ModelState);
-        //        //}
-        //        //var curentuser=User.Claims.ToList().FirstOrDefault(x=> x.Type=="id").Value;
+            //  var currentUserId = User.Claims.ToList().FirstOrDefault(x => x.Type == "").Value;
+            var currentUserId = User.FindFirstValue(ClaimTypes.Email);
+            var user = await _userManager.FindByEmailAsync(currentUserId);
 
-        //        // var user=await _userManager.FindByIdAsync(curentuser);
-        //        var userdto = new ChangePasswordDto()
-        //        {
-        //            Email = model.Email,
+            var result = await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
 
-        //            OldPassword = model.OldPassword,
-        //            NewPassword = model.NewPassword
+            if (result.Succeeded)
+            {
+                return Ok("Password changed succesfully");
+            }
+            else return Unauthorized("An error occurred while attempting to change password");
+            //if (!ModelState.IsValid)
+            //{
+            //    return BadRequest(ModelState);
+            //}
+            //var curentuser= this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            //var user=await _userManager.FindByIdAsync(curentuser);
 
-        //        };
+            //var userdto = new ChangePasswordDto()
+            //{
+            //    Email = model.Email,
+
+            //    OldPassword = model.OldPassword,
+            //    NewPassword = model.NewPassword
+
+            //};
 
 
-        //        var result = await _authServices.ChangePassword(userdto);
+            //var result = await _authServices.ChangePassword(userdto);
 
 
 
-        //        if (!result)
-        //        {
-        //            return BadRequest(result);
-        //        }
+            //if (!result)
+            //{
+            //    return BadRequest(result);
+            //}
 
-        //        return Ok();
-        //}
+            //return Ok();
+        }
     }
 }
