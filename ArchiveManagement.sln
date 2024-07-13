@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArchiveManagement.DAL", "Ar
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArchiveManagement.WEBAPI", "ArchiveManagement.WEBAPI\ArchiveManagement.WEBAPI.csproj", "{19D08887-6BF6-4A66-ADD3-0029FE790756}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArchiveManagement.BLL", "ArchiveManagementBLL\ArchiveManagement.BLL.csproj", "{373E54C6-3725-4750-8B87-2A8BB10A6D91}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArchiveManagement.BLL", "ArchiveManagement.BLL\ArchiveManagement.BLL.csproj", "{13ADDE42-24B9-4943-9C5D-5925F0F9D596}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{19D08887-6BF6-4A66-ADD3-0029FE790756}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19D08887-6BF6-4A66-ADD3-0029FE790756}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{19D08887-6BF6-4A66-ADD3-0029FE790756}.Release|Any CPU.Build.0 = Release|Any CPU
-		{373E54C6-3725-4750-8B87-2A8BB10A6D91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{373E54C6-3725-4750-8B87-2A8BB10A6D91}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{373E54C6-3725-4750-8B87-2A8BB10A6D91}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{373E54C6-3725-4750-8B87-2A8BB10A6D91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13ADDE42-24B9-4943-9C5D-5925F0F9D596}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13ADDE42-24B9-4943-9C5D-5925F0F9D596}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13ADDE42-24B9-4943-9C5D-5925F0F9D596}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13ADDE42-24B9-4943-9C5D-5925F0F9D596}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -13,8 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ArchiveManagementBLL\ArchiveManagement.BLL.csproj" />
-    <ProjectReference Include="..\ArchiveManagementDLL\ArchiveManagement.DAL.csproj" />
+    <ProjectReference Include="..\ArchiveManagement.BLL\ArchiveManagement.BLL.csproj" />
   </ItemGroup>
 
 </Project>
