@@ -1,4 +1,5 @@
 ﻿using ArchiveManagement.BLL.Dtos;
+using Microsoft.AspNetCore.Identity;
 using Org.BouncyCastle.Asn1.X509;
 using System;
 using System.Collections.Generic;
@@ -11,9 +12,9 @@ namespace ArchiveManagement.BLL.Interfaces
 {
     public interface IAuthServices
     {
-        Task<bool> RegisterUser(UserDto user);
+        Task<bool> RegisterUser(IdentityUser user);
 
-        Task<bool>  Login(UserDto user);
+      Task<bool>  Login(UserDto user);
         string GeneritTokeString(UserDto userdto);
         //Task<bool> ChangePassword(ChangePasswordDto chpassworddto);
 

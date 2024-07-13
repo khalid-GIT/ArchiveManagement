@@ -34,7 +34,7 @@ namespace ArchiveManagement.BLL.Implementations
             _userManager = usermanager;
             _config = config;
         }
-        public async Task<bool> RegisterUser(UserDto userdto)
+        public async Task<bool> RegisterUser(IdentityUser userdto)
         {
             var identityUser = new IdentityUser
             {
@@ -43,7 +43,7 @@ namespace ArchiveManagement.BLL.Implementations
                 EmailConfirmed = true
 
             };
-            var result = await _userManager.CreateAsync(identityUser, userdto.Password);
+            var result = await _userManager.CreateAsync(identityUser, userdto.PasswordHash);
             return result.Succeeded;
         }
         public async Task<bool> Login(UserDto user)
