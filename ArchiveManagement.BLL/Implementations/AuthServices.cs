@@ -34,35 +34,32 @@ namespace ArchiveManagement.BLL.Implementations
             _userManager = usermanager;
             _config = config;
         }
-        public async Task<bool> RegisterUser(IdentityUser userdto)
+        public async Task<bool> RegisterUser(IdentityUser userdto,string password)
         {
-            var identityUser = new IdentityUser
+            var result = await _userManager.CreateAsync(userdto, password);
+            if (result.Succeeded)
             {
-                Email = userdto.Email,
-                UserName = userdto.Email,
-                EmailConfirmed = true
-
-            };
-            var result = await _userManager.CreateAsync(identityUser, userdto.PasswordHash);
-            return result.Succeeded;
+                return result.Succeeded;
+            }
+            else { return false; }
         }
-        public async Task<bool> Login(UserDto user)
+        public async Task<bool> Login(IdentityUser user,string password)
         {
 
-            var _identityUser = await _userManager.FindByEmailAsync(user.Username);
+            var _identityUser = await _userManager.FindByEmailAsync(user.UserName);
             var _roleUser = await _userManager.GetRolesAsync(_identityUser);
 
             if (_identityUser == null) { return false; }
-            return await _userManager.CheckPasswordAsync(_identityUser, user.Password);
+            return await _userManager.CheckPasswordAsync(_identityUser, password);
         }
 
-        public string GeneritTokeString(UserDto userdto)
+        public string GeneritTokeString(IdentityUser userdto,string password)
         {
 
 
             IEnumerable<System.Security.Claims.Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Email,userdto.Username),
+                new Claim(ClaimTypes.Email,userdto.UserName),
                new Claim(ClaimTypes.Role,"Admin"),
             };
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("jwt:key").Value));
@@ -78,6 +75,8 @@ namespace ArchiveManagement.BLL.Implementations
 
 
         }
+
+       
         //public async Task<bool> ChangePassword(ChangePasswordDto chpassworddto)
         //{
 
@@ -96,7 +95,7 @@ namespace ArchiveManagement.BLL.Implementations
 
         //    var result = await _userManager.ResetPasswordAsync(_identityUser, token, chpassworddto.NewPassword);
 
-            
+
         //    if (_identityUser == null)
         //    {
         //        return false;

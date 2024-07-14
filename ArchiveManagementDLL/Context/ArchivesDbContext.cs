@@ -17,7 +17,7 @@ namespace ArchiveManagement.DAL.Context
 
         public ArchivesDbContext(DbContextOptions options) : base(options) { }
         public DbSet<Tier> Tiers { get; set; }
-        //public DbSet<User> aspnetusers { get; set; }
+       
 
     }
 }

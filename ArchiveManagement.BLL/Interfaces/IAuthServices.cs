@@ -12,11 +12,12 @@ namespace ArchiveManagement.BLL.Interfaces
 {
     public interface IAuthServices
     {
-        Task<bool> RegisterUser(IdentityUser user);
+        Task<bool> RegisterUser(IdentityUser user,string password);
 
-      Task<bool>  Login(UserDto user);
-        string GeneritTokeString(UserDto userdto);
+      Task<bool>  Login(IdentityUser user,string password);
+        string GeneritTokeString(IdentityUser user, string password);
         //Task<bool> ChangePassword(ChangePasswordDto chpassworddto);
+   
 
 
     }

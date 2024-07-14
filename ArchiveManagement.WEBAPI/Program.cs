@@ -59,6 +59,7 @@ builder.Services.AddSwaggerGen(opt =>
 var connetionString = builder.Configuration.GetConnectionString("WebApiDatabase");
 //builder.Services.AddDbContext<ArchivesDbContext>(options => options.UseMySQL(connetionString, null));
 builder.Services.AddDbContext<ArchivesDbContext>(options =>options.UseMySQL(connetionString, null));
+//TO CHANGE DEFAULT REQUIRED VALUES OF IDENTITY
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 {
     options.Password.RequiredLength = 6;

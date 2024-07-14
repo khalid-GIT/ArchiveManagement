@@ -13,6 +13,8 @@ using ArchiveManagement.BLL.Interfaces;
 using ArchiveManagement.BLL.Dtos;
 using System.Security.Claims;
 
+
+
 //using Microsoft.AspNetCore.Identity;
 //using Microsoft.AspNetCore.Identity;
 
@@ -26,40 +28,49 @@ using System.Security.Claims;
 
 namespace ArchiveManagement.WEBAPI.Controllers
 {
-   
+
     [Route("api/[controller]")]
     [ApiController]
-   
+
     public class AuthController : ControllerBase
     {
 
         private readonly IAuthServices _authServices;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        //public SignInManager<IdentityUser> SignInManager;
 
-        public AuthController(IAuthServices authServices, UserManager<IdentityUser> userManager)
+        public AuthController(IAuthServices authServices, UserManager<IdentityUser> userManager
+            , SignInManager<IdentityUser> signInManager,RoleManager<IdentityRole> roleManager)
         {
             _authServices = authServices;
             _userManager = userManager;
+            _signInManager = signInManager;
+            _roleManager = roleManager ;
+
         }
-        [Authorize(Roles = "Admin")]
+
         [HttpPost("Register")]
-        public async Task<bool> Register(RegisterBindingModel user)
+
+        [AllowAnonymous]
+        public async Task<bool> Register(RegisterBindingModel userModel)
         {
             //CreatPassWordhash(request.Password, out byte[] passwordhash, out byte[] passwordsalt);
             if (!ModelState.IsValid)
             {
                 return false;
             }
-            IdentityUser userdto = new IdentityUser
+            IdentityUser user = new IdentityUser
             {
-                Email = user.Email,
-                UserName = user.UserName,
-                PasswordHash = user.Password
+                Email = userModel.Email,
+                UserName = userModel.UserName,
+                // PasswordHash = userModel.Password
             };
-             return await _authServices.RegisterUser(userdto);
+            return await _authServices.RegisterUser(user, userModel.Password);
         }
         [HttpPost("Login")]
-        public async Task<IActionResult> Login(LoginModel user)
+        public async Task<IActionResult> Login(LoginModel model)
         {
 
             //check if te user exist
@@ -67,16 +78,25 @@ namespace ArchiveManagement.WEBAPI.Controllers
 
             if (ModelState.IsValid)
             {
-                var userdto = new UserDto
+                //var userdto = new UserDto
+                //{
+                //    Email = user.Email,
+                //    Username = user.UserName,
+                //    Password = user.Password
+                //};
+
+                IdentityUser user = new IdentityUser
                 {
-                    Email = user.Email,
-                    Username = user.UserName,
-                    Password = user.Password
+                    Email = model.Email,
+                    UserName = model.Email,
+                    // PasswordHash = userModel.Password
                 };
-                var result = await _authServices.Login(userdto);
+
+                var result = await _authServices.Login(user, model.Password);
                 if (result == true)
                 {
-                    var stringToken = _authServices.GeneritTokeString(userdto);
+                    var stringToken = _authServices.GeneritTokeString(user, model.Password);
+                    await _signInManager.SignInAsync(user, isPersistent: false);
                     return Ok(stringToken);
                 }
                 return BadRequest();
@@ -89,6 +109,11 @@ namespace ArchiveManagement.WEBAPI.Controllers
             //    var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             //  var currentUserId = User.Claims.ToList().FirstOrDefault(x => x.Type == "").Value;
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             var currentUserId = User.FindFirstValue(ClaimTypes.Email);
             var user = await _userManager.FindByEmailAsync(currentUserId);
 
@@ -99,33 +124,19 @@ namespace ArchiveManagement.WEBAPI.Controllers
                 return Ok("Password changed succesfully");
             }
             else return Unauthorized("An error occurred while attempting to change password");
-            //if (!ModelState.IsValid)
-            //{
-            //    return BadRequest(ModelState);
-            //}
-            //var curentuser= this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            //var user=await _userManager.FindByIdAsync(curentuser);
 
-            //var userdto = new ChangePasswordDto()
-            //{
-            //    Email = model.Email,
+        }
 
-            //    OldPassword = model.OldPassword,
-            //    NewPassword = model.NewPassword
-
-            //};
-
-
-            //var result = await _authServices.ChangePassword(userdto);
-
-
-
-            //if (!result)
-            //{
-            //    return BadRequest(result);
-            //}
-
-            //return Ok();
+        [HttpPost("LogOut")]
+        public async Task<IActionResult> Logout()
+        {
+            if (_signInManager != null)
+            {
+                IdentityUser user = new IdentityUser();
+                await _signInManager.SignOutAsync();
+                return Ok();
+            }
+            return BadRequest();
         }
     }
 }

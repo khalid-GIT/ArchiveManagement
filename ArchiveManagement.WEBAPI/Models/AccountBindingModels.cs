@@ -11,7 +11,7 @@ public class LoginModel
     [DataType(DataType.Password)]
     [Display(Name = "Mot de passe")]
     public string Password { get; set; }
-    public string UserName { get; set; } = string.Empty;
+  //  public string UserName { get; set; } = string.Empty;
 }
     public class RegisterBindingModel
 {
