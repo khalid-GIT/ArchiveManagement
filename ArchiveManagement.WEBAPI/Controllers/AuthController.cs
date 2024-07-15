@@ -104,22 +104,19 @@ namespace ArchiveManagement.WEBAPI.Controllers
                     if (_identityUser != null)
                     {
                         _user.UserName = _identityUser.UserName;
+                        _user.Id = _identityUser.Id;
                     }
                     var stringToken = _authServices.GeneritTokeString(_user, model.Password);
                     await _signInManager.SignInAsync(_user, isPersistent: false);
                     return Ok(stringToken);
                 }
-                return BadRequest();
+                return BadRequest("User not exist");
             }
             return BadRequest("Bad data");
         }
         [HttpPost("ChangePassword")]
         public async Task<IActionResult> ChangePassword(ChangePasswordBindingModel model)
         {
-            //    var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            //  var currentUserId = User.Claims.ToList().FirstOrDefault(x => x.Type == "").Value;
-
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -152,7 +149,6 @@ namespace ArchiveManagement.WEBAPI.Controllers
 
         [HttpPost("RemoveLogin")]
         [Authorize(Roles = "Admin")]
-
         public async Task<IActionResult> RemoveLogin(RemoveLoginModel model)
         {
             IdentityUser userExist = new IdentityUser();

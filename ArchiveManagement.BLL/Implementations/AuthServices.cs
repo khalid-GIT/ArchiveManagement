@@ -19,6 +19,7 @@ using System.Configuration;
 using static Org.BouncyCastle.Math.EC.ECCurve;
 using Microsoft.Extensions.Configuration;
 using System.Runtime.Intrinsics.X86;
+using Microsoft.AspNetCore.Http;
 //using Fluent.Infrastructure.FluentModel;
 //using Microsoft.AspNet.Identity;
 
@@ -38,37 +39,49 @@ namespace ArchiveManagement.BLL.Implementations
             _config = config;
             _roleManager = roleManager;
         }
-        public async Task<bool> RegisterUser(IdentityUser userdto,string password)
+        public async Task<bool> RegisterUser(IdentityUser userdto, string password)
         {
             var result = await _userManager.CreateAsync(userdto, password);
-            
+
             if (result.Succeeded)
             {
                 //Ajout user au Claims
                 //var MyClaimTypes = new ClaimsPrincipal(new ClaimsIdentity(await _userManager.GetClaimsAsync(userdto)));
-               // await _userManager.AddClaimAsync(userdto, new System.Security.Claims.Claim(MyClaimTypes.Stuff, MyClaimTypes.Whatever));
+                // await _userManager.AddClaimAsync(userdto, new System.Security.Claims.Claim(MyClaimTypes.Stuff, MyClaimTypes.Whatever));
                 return true;
             }
             else { return false; }
         }
-        public async Task<bool> Login(IdentityUser user,string password)
+        public async Task<bool> Login(IdentityUser user, string password)
         {
 
             var _identityUser = await _userManager.FindByEmailAsync(user.Email);
-            var _roleUser = await _userManager.GetRolesAsync(_identityUser);
 
-            if (_identityUser == null) { return false; }
+
+            if (_identityUser == null)
+            {
+                return false;
+            }
+            else
+            {
+                var _roleUser = await _userManager.GetRolesAsync(_identityUser);
+            }
             return await _userManager.CheckPasswordAsync(_identityUser, password);
         }
 
-        public string GeneritTokeString(IdentityUser userdto,string password)
+        public string GeneritTokeString(IdentityUser userdto, string password)
         {
+
+        //    var _role = _userManager.GetRolesAsync(userdto);
+          var userRoles = _userManager.GetRolesAsync(userdto).ToString();
+
+        
 
 
             IEnumerable<System.Security.Claims.Claim> claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Email,userdto.UserName),
-               new Claim(ClaimTypes.Role,"Admin"),
+               new Claim(ClaimTypes.Role,userRoles!=null?userRoles:"Ghuist"),
             };
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("jwt:key").Value));
 
@@ -84,7 +97,7 @@ namespace ArchiveManagement.BLL.Implementations
 
         }
 
-       
+
         //public async Task<bool> ChangePassword(ChangePasswordDto chpassworddto)
         //{
 
