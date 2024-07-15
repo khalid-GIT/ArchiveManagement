@@ -58,20 +58,33 @@ builder.Services.AddSwaggerGen(opt =>
 //https://www.youtube.com/watch?v=SdtOGowW-Dk
 var connetionString = builder.Configuration.GetConnectionString("WebApiDatabase");
 //builder.Services.AddDbContext<ArchivesDbContext>(options => options.UseMySQL(connetionString, null));
+//FOR ENTITY FRAMEWORK DBCONTEXT
 builder.Services.AddDbContext<ArchivesDbContext>(options =>options.UseMySQL(connetionString, null));
+//FOR IDENTITY
 //TO CHANGE DEFAULT REQUIRED VALUES OF IDENTITY
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 {
+    options.Lockout.AllowedForNewUsers = true;
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+    options.Lockout.MaxFailedAccessAttempts = 4;
+    options.Password.RequireNonAlphanumeric = true;
     options.Password.RequiredLength = 6;
+    options.Password.RequireUppercase = true;
+    options.Password.RequireLowercase = true;
 
 }
-).AddEntityFrameworkStores<ArchivesDbContext>().AddDefaultTokenProviders();
+).AddEntityFrameworkStores<ArchivesDbContext>()
+.AddDefaultTokenProviders()
+.AddSignInManager<SignInManager<IdentityUser>>()
+.AddUserManager<UserManager<IdentityUser>>()
+;
+//ADDING AUTHENTIFICATION
 builder.Services.AddAuthentication(options =>
 {
 
     options.DefaultAuthenticateScheme=JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme=JwtBearerDefaults.AuthenticationScheme;
-
+    options.DefaultScheme=JwtBearerDefaults.AuthenticationScheme;   
 }).AddJwtBearer(options=>
 {
     options.TokenValidationParameters = new TokenValidationParameters()

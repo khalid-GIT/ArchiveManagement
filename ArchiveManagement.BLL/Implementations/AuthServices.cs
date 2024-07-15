@@ -18,6 +18,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using System.Configuration;
 using static Org.BouncyCastle.Math.EC.ECCurve;
 using Microsoft.Extensions.Configuration;
+using System.Runtime.Intrinsics.X86;
 //using Fluent.Infrastructure.FluentModel;
 //using Microsoft.AspNet.Identity;
 
@@ -27,19 +28,26 @@ namespace ArchiveManagement.BLL.Implementations
     {
         // protected  AuthDal _authDal = new AuthDal();
         protected UserManager<IdentityUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+
         private readonly IConfiguration _config;
 
-        public AuthServices(UserManager<IdentityUser> usermanager, IConfiguration config)
+        public AuthServices(UserManager<IdentityUser> usermanager, IConfiguration config, RoleManager<IdentityRole> roleManager)
         {
             _userManager = usermanager;
             _config = config;
+            _roleManager = roleManager;
         }
         public async Task<bool> RegisterUser(IdentityUser userdto,string password)
         {
             var result = await _userManager.CreateAsync(userdto, password);
+            
             if (result.Succeeded)
             {
-                return result.Succeeded;
+                //Ajout user au Claims
+                //var MyClaimTypes = new ClaimsPrincipal(new ClaimsIdentity(await _userManager.GetClaimsAsync(userdto)));
+               // await _userManager.AddClaimAsync(userdto, new System.Security.Claims.Claim(MyClaimTypes.Stuff, MyClaimTypes.Whatever));
+                return true;
             }
             else { return false; }
         }

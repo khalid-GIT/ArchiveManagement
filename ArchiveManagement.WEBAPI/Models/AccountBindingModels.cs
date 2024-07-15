@@ -13,7 +13,20 @@ public class LoginModel
     public string Password { get; set; }
   //  public string UserName { get; set; } = string.Empty;
 }
-    public class RegisterBindingModel
+public class RemoveLoginModel
+{
+    [Required]
+    [Display(Name = "E-mail")]
+    public string Email { get; set; }
+
+    //[Required]
+    //[StringLength(100, ErrorMessage = "La chaîne {0} doit comporter au moins {2} caractères.", MinimumLength = 6)]
+    //[DataType(DataType.Password)]
+    //[Display(Name = "Mot de passe")]
+    //public string Password { get; set; }
+    //  public string UserName { get; set; } = string.Empty;
+}
+public class RegisterBindingModel
 {
     [Required]
     [Display(Name = "E-mail")]
@@ -22,7 +35,7 @@ public class LoginModel
     [Required]
     [Display(Name = "UserName")]
     public string UserName { get; set; }
-
+    public string ?Role { get; set; }
     [Required]
     [StringLength(100, ErrorMessage = "La chaîne {0} doit comporter au moins {2} caractères.", MinimumLength = 6)]
     [DataType(DataType.Password)]
@@ -38,12 +51,10 @@ public class LoginModel
 public class RemoveLoginBindingModel
 {
     [Required]
-    [Display(Name = "Fournisseur de connexion")]
-    public string LoginProvider { get; set; }
+    [Display(Name = "E-mail")]
+    public string Email { get; set; }
 
-    [Required]
-    [Display(Name = "Clé du fournisseur")]
-    public string ProviderKey { get; set; }
+    
 }
 
 public class SetPasswordBindingModel

@@ -28,7 +28,7 @@ using System.Security.Claims;
 
 namespace ArchiveManagement.WEBAPI.Controllers
 {
-
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
 
@@ -42,18 +42,18 @@ namespace ArchiveManagement.WEBAPI.Controllers
         //public SignInManager<IdentityUser> SignInManager;
 
         public AuthController(IAuthServices authServices, UserManager<IdentityUser> userManager
-            , SignInManager<IdentityUser> signInManager,RoleManager<IdentityRole> roleManager)
+            , SignInManager<IdentityUser> signInManager, RoleManager<IdentityRole> roleManager)
         {
             _authServices = authServices;
             _userManager = userManager;
             _signInManager = signInManager;
-            _roleManager = roleManager ;
+            _roleManager = roleManager;
 
         }
 
         [HttpPost("Register")]
-
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin")]
+        // [AllowAnonymous]
         public async Task<bool> Register(RegisterBindingModel userModel)
         {
             //CreatPassWordhash(request.Password, out byte[] passwordhash, out byte[] passwordsalt);
@@ -65,33 +65,35 @@ namespace ArchiveManagement.WEBAPI.Controllers
             {
                 Email = userModel.Email,
                 UserName = userModel.UserName,
+
                 // PasswordHash = userModel.Password
             };
-            return await _authServices.RegisterUser(user, userModel.Password);
+            bool result = await _authServices.RegisterUser(user, userModel.Password);
+
+            if (result)
+            {
+                if (await _roleManager.RoleExistsAsync(userModel.Role))
+                {
+
+                    await _userManager.AddToRoleAsync(user, userModel.Role);
+
+                }
+            }
+            return result;
         }
+        [AllowAnonymous]
         [HttpPost("Login")]
         public async Task<IActionResult> Login(LoginModel model)
         {
-
             //check if te user exist
-
-
             if (ModelState.IsValid)
             {
-                //var userdto = new UserDto
-                //{
-                //    Email = user.Email,
-                //    Username = user.UserName,
-                //    Password = user.Password
-                //};
-
                 IdentityUser user = new IdentityUser
                 {
                     Email = model.Email,
                     UserName = model.Email,
                     // PasswordHash = userModel.Password
                 };
-
                 var result = await _authServices.Login(user, model.Password);
                 if (result == true)
                 {
@@ -134,9 +136,28 @@ namespace ArchiveManagement.WEBAPI.Controllers
             {
                 IdentityUser user = new IdentityUser();
                 await _signInManager.SignOutAsync();
-                return Ok();
+                return Ok("End Session");
             }
             return BadRequest();
+        }
+        //a faire demain
+
+        [HttpPost("RemoveLogin")]
+        [Authorize(Roles = "Admin")]
+
+        public async Task<IActionResult> RemoveLogin(RemoveLoginModel model)
+        {
+            IdentityUser userExist = new IdentityUser();
+            userExist = await _userManager.FindByEmailAsync(model.Email);
+            if (userExist != null)
+            {
+                var result = await _userManager.DeleteAsync(userExist);
+                if (result.Succeeded)
+                {
+                    return Ok("Done");
+                }
+            }
+            return BadRequest("User not find");
         }
     }
 }
