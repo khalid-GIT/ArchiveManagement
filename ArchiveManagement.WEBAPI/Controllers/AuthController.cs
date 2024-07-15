@@ -91,14 +91,22 @@ namespace ArchiveManagement.WEBAPI.Controllers
                 IdentityUser user = new IdentityUser
                 {
                     Email = model.Email,
-                    UserName = model.Email,
+                    //UserName = model.UserName,
                     // PasswordHash = userModel.Password
                 };
                 var result = await _authServices.Login(user, model.Password);
                 if (result == true)
                 {
-                    var stringToken = _authServices.GeneritTokeString(user, model.Password);
-                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    IdentityUser _user = new IdentityUser();
+                    _user.Email = model.Email;
+                    
+                    var _identityUser = await _userManager.FindByEmailAsync(user.Email);
+                    if (_identityUser != null)
+                    {
+                        _user.UserName = _identityUser.UserName;
+                    }
+                    var stringToken = _authServices.GeneritTokeString(_user, model.Password);
+                    await _signInManager.SignInAsync(_user, isPersistent: false);
                     return Ok(stringToken);
                 }
                 return BadRequest();
