@@ -59,9 +59,9 @@ namespace ArchiveManagement.BLL.Implementations
 
         }
 
-        public string GetFolderById(string idParent)
+        public string GetFolderPathById(string idParent)
         {
-            return _folderDal.GetFolderById(idParent);
+            return _folderDal.GetFolderPathById(idParent);
         }
         public bool IfExistfolderByid(string id)
         {

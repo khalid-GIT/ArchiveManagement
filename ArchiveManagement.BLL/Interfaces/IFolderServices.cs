@@ -9,7 +9,7 @@ namespace ArchiveManagement.BLL.Interfaces
     public interface IFolderServices
     {
         bool SavePath(string path, string name, string idParent);
-        string GetFolderById(string id);
+        string GetFolderPathById(string id);
         bool IfExistfolderByid(string id);
         string  GetIdFolderByName(string id);
     }
