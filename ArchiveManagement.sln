@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArchiveManagement.DAL", "Ar
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArchiveManagement.WEBAPI", "ArchiveManagement.WEBAPI\ArchiveManagement.WEBAPI.csproj", "{19D08887-6BF6-4A66-ADD3-0029FE790756}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArchiveManagement.BLL", "ArchiveManagement.BLL\ArchiveManagement.BLL.csproj", "{13ADDE42-24B9-4943-9C5D-5925F0F9D596}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArchiveManagement.BLL", "ArchiveManagement.BLL\ArchiveManagement.BLL.csproj", "{13ADDE42-24B9-4943-9C5D-5925F0F9D596}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

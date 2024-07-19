@@ -54,10 +54,7 @@ namespace ArchiveManagement.BLL.Implementations
         }
         public async Task<bool> Login(IdentityUser user, string password)
         {
-
             var _identityUser = await _userManager.FindByEmailAsync(user.Email);
-
-
             if (_identityUser == null)
             {
                 return false;

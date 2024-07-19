@@ -11,6 +11,8 @@ using ArchiveManagement.BLL.Interfaces;
 using ArchiveManagement.BLL.Implementations;
 using ArchiveManagement.DAL.Context;
 using Microsoft.EntityFrameworkCore;
+using ArchiveManagement.DAL.Interfaces;
+using ArchiveManagement.DAL.Implementations;
 
 
 //using Microsoft.OpenApi.Models;
@@ -101,6 +103,10 @@ builder.Services.AddAuthentication(options =>
 
 });
 builder.Services.AddTransient<IAuthServices,AuthServices>();
+builder.Services.AddTransient<IFolderServices, FolderServices>();
+builder.Services.AddTransient<IFileservices, Fileservices>();
+builder.Services.AddTransient<IFolderDal, FolderDal>(); 
+
 
 var app = builder.Build();
 

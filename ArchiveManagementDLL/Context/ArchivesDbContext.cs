@@ -22,49 +22,19 @@ namespace ArchiveManagement.DAL.Context
 
         public ArchivesDbContext(DbContextOptions options) : base(options) { }
         public DbSet<Tier> Tiers { get; set; }
+        public DbSet<Folder> Folders { get; set; }
+        public DbSet<Files> Files { get; set; } 
 
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            base.OnModelCreating(builder);
-            //builder.Entity<Tier>();
-            this.Seedroles(builder);
-
-
-        }
-        private void Seedroles(ModelBuilder builder)
-        {
-            builder.Entity<IdentityRole>().HasData(
-               new IdentityRole() { Id = Guid.NewGuid().ToString(), Name = "Admin", NormalizedName = "Admin", ConcurrencyStamp = "1" },
-               new IdentityRole() { Id = Guid.NewGuid().ToString(), Name = "User", NormalizedName = "User", ConcurrencyStamp = "2" },
-               new IdentityRole() { Id = Guid.NewGuid().ToString(), Name = "RH", NormalizedName = "RH", ConcurrencyStamp = "3" },
-                new IdentityRole() {Name = "Guist", NormalizedName = "Guist", ConcurrencyStamp = "4" }
-            );
-        }
-
-        public void CreateUsers()
-        {
-            
-
-        var _identityUser =  _userManager.FindByEmailAsync("khalid.elkettani@gmail.com");
+        //protected override void OnModelCreating(ModelBuilder builder)
+        //{
+        //    base.OnModelCreating(builder);
+        //    builder.Entity<Tier>();
+        //    builder.Entity<Folder>();
+        //    //  this.Seedroles(builder);
 
 
-            if (_identityUser == null)
-
-            {
-               IdentityUser _user = new IdentityUser
-                {
-                    Email = "khalid.elkettani@gmail.com",
-                    UserName = "khalid.elkettani@gmail.com"
-               };
-                  _userManager.CreateAsync(_user, "User@123");
-            }
-           var  result = _userManager.FindByEmailAsync("khalid.elkettani@gmail.com");
-            //IdentityUser _user_ = new IdentityUser();
-            //if (result!=null)
-            //{
-            //    _userManager.AddToRoleAsync (_user_.Id, "Admin");
-            //}
-        }
+        //}
+       
 
     }
 }
