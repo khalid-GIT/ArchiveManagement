@@ -10,5 +10,7 @@ namespace ArchiveManagement.BLL.Interfaces
     {
         bool SavePath(string path, string name, string idParent);
         string GetFolderById(string id);
+        bool IfExistfolderByid(string id);
+        string  GetIdFolderByName(string id);
     }
 }

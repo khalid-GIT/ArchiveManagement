@@ -20,12 +20,12 @@ namespace ArchiveManagement.BLL.Implementations
         private IFolderDal _folderDal;
 
 
-        public FolderServices(ArchivesDbContext archivesDbContext,IFolderDal folderDal)
+        public FolderServices(ArchivesDbContext archivesDbContext, IFolderDal folderDal)
         {
             _context = archivesDbContext;
             _folderDal = folderDal;
         }
-        public bool SavePath(string path,string name,string idParent)
+        public bool SavePath(string path, string name, string idParent)
         {
             try
             {
@@ -37,30 +37,42 @@ namespace ArchiveManagement.BLL.Implementations
                 //    Name= name
                 //};
 
-                Folder   folderdto = new Folder
+                Folder folderdto = new Folder
                 {
                     id = Guid.NewGuid().ToString(),
                     FolderPath = path,
                     Name = name,
                     Description = name,
-                    idParent= idParent
+                    idParent = idParent
                 };
 
                 _context.Add(folderdto);
-                _context.SaveChanges(); 
+                _context.SaveChanges();
 
-                return false;
+                return true;
             }
             catch (IOException ioex)
             {
                 Console.WriteLine(ioex.Message);
+                return false;
             }
-            return true;
+
         }
 
         public string GetFolderById(string idParent)
         {
-            return _folderDal.GetFolderById(idParent);    
+            return _folderDal.GetFolderById(idParent);
+        }
+        public bool IfExistfolderByid(string id)
+        {
+            return _folderDal.IfExistfolderByid(id);
+
+        }
+       
+        public string GetIdFolderByName(string name)
+        {
+
+            return _folderDal.GetIdFolderByName(name);
         }
     }
 }

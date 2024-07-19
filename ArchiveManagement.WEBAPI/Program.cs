@@ -15,6 +15,7 @@ using ArchiveManagement.DAL.Interfaces;
 using ArchiveManagement.DAL.Implementations;
 
 
+
 //using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -105,7 +106,11 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddTransient<IAuthServices,AuthServices>();
 builder.Services.AddTransient<IFolderServices, FolderServices>();
 builder.Services.AddTransient<IFileservices, Fileservices>();
-builder.Services.AddTransient<IFolderDal, FolderDal>(); 
+builder.Services.AddTransient<IFolderDal, FolderDal>();
+
+  //builder.Services.AddSingleton
+  //repositorie
+
 
 
 var app = builder.Build();
@@ -116,7 +121,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
