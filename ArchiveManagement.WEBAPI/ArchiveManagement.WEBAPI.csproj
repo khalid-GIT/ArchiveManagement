@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -27,6 +27,13 @@
 
   <ItemGroup>
     <None Include="C:\Users\lenovo\source\repos\ArchiveManagement\ArchiveManagement.WEBAPI\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\Events\" />
+    <Folder Include="Controllers\AppeldOffre\" />
+    <Folder Include="Controllers\ParcAuto\" />
+    <Folder Include="Controllers\RH\" />
   </ItemGroup>
 
 </Project>

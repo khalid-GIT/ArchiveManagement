@@ -13,7 +13,10 @@ using ArchiveManagement.DAL.Context;
 using Microsoft.EntityFrameworkCore;
 using ArchiveManagement.DAL.Interfaces;
 using ArchiveManagement.DAL.Implementations;
-
+using ArchiveManagement.DAL.Interfaces.BusinessDocuments;
+using ArchiveManagement.DAL.Implementations.BusinessDocuments;
+using ArchiveManagement.BLL.Implementations.BusinessDocuments;
+using ArchiveManagement.BLL.Interfaces.BusinessDocuments;
 
 
 //using Microsoft.OpenApi.Models;
@@ -107,7 +110,10 @@ builder.Services.AddTransient<IAuthServices,AuthServices>();
 builder.Services.AddTransient<IFolderServices, FolderServices>();
 builder.Services.AddTransient<IFileservices, Fileservices>();
 builder.Services.AddTransient<IFolderDal, FolderDal>();
-
+builder.Services.AddTransient<ITypeBusinessDocumentDAL, TypeBusinessDocumentDAL>();
+builder.Services.AddTransient<ITypeBusinessDocumentservices, TypeBusinessDocumentservices>();
+builder.Services.AddTransient<IDocumentsBusinessDAL, DocumentsBusinessDAL>(); 
+builder.Services.AddTransient<IDocumentsBusinessServices, DocumentsBusinessServices>();  
   //builder.Services.AddSingleton
   //repositorie
 

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using ArchiveManagement.BLL.Implementations;
 using ArchiveManagement.DAL.Entities;
 using Google.Protobuf.WellKnownTypes;
+using ArchiveManagement.WEBAPI.Models;
 
 namespace ArchiveManagement.WEBAPI.Controllers
 {
@@ -25,7 +26,7 @@ namespace ArchiveManagement.WEBAPI.Controllers
         }
 
         [HttpPost("CreatFolder")]
-        public string CreatFolder(string FolderName, string? parentFolderPath)
+        public object CreatFolder(string FolderName, string? parentFolderPath)
         {
             string roots = _configuration["RootPath"];
             string idroot = parentFolderPath != null ? parentFolderPath : _folderServices.GetIdFolderByName("root");
@@ -35,7 +36,12 @@ namespace ArchiveManagement.WEBAPI.Controllers
             {
                 if (!Directory.Exists(roots))
                 {
-                    return "Root not exist";
+                    return new ResponseModel
+                    {
+                        Status = "Error",
+                        Message = "Root not exist"
+                    };
+                   // return "Root not exist";
                 }
                 if (_folderServices.GetIdFolderByName("root") == null)
                 {
@@ -63,9 +69,60 @@ namespace ArchiveManagement.WEBAPI.Controllers
             {
                 Console.WriteLine(ioex.Message);
             }
-            return pathToNewFolder;
+            return new ResponseModel
+            {
+                Status = "Success",
+                Message = "Folder : " + pathToNewFolder + " Created"
+            };
+          //  return pathToNewFolder;
         }
+        [HttpDelete("delete")]
+        public object folderDelete(string id)
+        {
+            var pathfolder = _folderServices.GetFolderPathById(id);
+            if (pathfolder == null)
+            {
+                return new ResponseModel
+                {
+                    Status = "Error",
+                    Message = "Folder : " + pathfolder + " not exist"
+                };
+            }
+            else
+            {
+                if (!Directory.Exists(pathfolder))
+                {
+                    return new ResponseModel
+                    {
+                        Status = "Error",
+                        Message = "Folder  : " + pathfolder + "  not exist"
+                    };
+                }
+                else
+                {
+                    string[] filePaths = Directory.GetFiles(pathfolder);
+            //      var pop= pathfolder.GetFileSystemInfos().Length ; 
+                    IEnumerable<string> items = Directory.EnumerateFileSystemEntries(pathfolder);
 
+
+                    if (filePaths.Length > 0 || items!=null)
+                    {
+                        return new ResponseModel
+                        {
+                            Status = "Error",
+                            Message = "Folder not Empty"
+                        };
+                    }
+                    else { Directory.Delete(pathfolder); }
+                }
+
+            }
+            return new ResponseModel
+            {
+                Status = "Delete",
+                Message = "Delete Successfuly"
+            };
+        }
 
     }
 }
