@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity;
 using ArchiveManagement.BLL.Interfaces;
 using ArchiveManagement.BLL.Dtos;
 using System.Security.Claims;
+using MySqlX.XDevAPI;
 
 
 
@@ -40,7 +41,6 @@ namespace ArchiveManagement.WEBAPI.Controllers
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         //public SignInManager<IdentityUser> SignInManager;
-
         public AuthController(IAuthServices authServices, UserManager<IdentityUser> userManager
             , SignInManager<IdentityUser> signInManager, RoleManager<IdentityRole> roleManager)
         {
@@ -48,7 +48,6 @@ namespace ArchiveManagement.WEBAPI.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
-
         }
 
         [HttpPost("Register")]
@@ -95,20 +94,36 @@ namespace ArchiveManagement.WEBAPI.Controllers
                     // PasswordHash = userModel.Password
                 };
                 var result = await _authServices.Login(user, model.Password);
-                if (result == true)
+               if (result == true)
                 {
                     IdentityUser _user = new IdentityUser();
                     _user.Email = model.Email;
                     
-                    var _identityUser = await _userManager.FindByEmailAsync(user.Email);
+                    var _identityUser = await _userManager.FindByEmailAsync(_user.Email);
                     if (_identityUser != null)
                     {
                         _user.UserName = _identityUser.UserName;
                         _user.Id = _identityUser.Id;
                     }
-                    var stringToken = _authServices.GeneritTokeString(_user, model.Password);
-                    await _signInManager.SignInAsync(_user, isPersistent: false);
-                    return Ok(stringToken);
+                    var stringToken =  _authServices.GeneritTokeString(_user, model.Password);
+                    //Save a value og Token
+                    //_session(/*stringToken*/, "Token");
+                    var results = await _signInManager.PasswordSignInAsync(_user.Email, model.Password, isPersistent: false, lockoutOnFailure: false);
+
+                    if (!results.Succeeded)
+                    {
+                        return BadRequest("Invalid login attempt");
+                    }
+
+                    // Si l'authentification a réussi, alors appeler SignInAsync
+                    var users = await _userManager.FindByEmailAsync(_user.Email);
+                    if (users != null)
+                    {
+                        await _signInManager.SignInAsync(_user, isPersistent: false);
+                    }
+                    //await _signInManager.SignInAsync(_user, isPersistent: false);
+                    var access_token = stringToken;
+                    return Ok(new { token=access_token });
                 }
                 return BadRequest("User not exist");
             }

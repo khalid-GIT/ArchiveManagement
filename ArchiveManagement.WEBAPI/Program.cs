@@ -22,10 +22,21 @@ using ArchiveManagement.BLL.Interfaces.BusinessDocuments;
 //using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
+// Ajouter la politique CORS pour permettre les requêtes depuis 'http://localhost:3000'
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowLocalhost3000",
+        builder => builder
+            .WithOrigins("http://localhost:3000") // Autoriser seulement localhost:3000
+            .AllowAnyMethod() // Autoriser toutes les méthodes HTTP (GET, POST, etc.)
+            .AllowAnyHeader() // Autoriser tous les headers
+            .AllowCredentials()); // Permettre l'envoi des credentials si nécessaire (facultatif)
+});
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddHttpContextAccessor();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 //builder.Services.AddSwaggerGen();
@@ -128,6 +139,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 app.UseHttpsRedirection();
+// Utiliser la politique CORS
+app.UseCors("AllowLocalhost3000");
+
 app.UseAuthentication();
 app.UseAuthorization();
 

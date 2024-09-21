@@ -123,6 +123,33 @@ namespace ArchiveManagement.WEBAPI.Controllers
                 Message = "Delete Successfuly"
             };
         }
+        [HttpGet("GetFolderPathById")]
+        public object GetFolderPathById(string id)
+        {
+            var pathfolder = _folderServices.GetFolderPathById(id);
+            if (pathfolder == null)
+            {
+                return new ResponseModel
+                {
+                    Status = "Error",
+                    Message = "Folder : " + pathfolder + " not exist"
+                };
+            }
+            else
+            {
+                if (!Directory.Exists(pathfolder))
+                {
+                    return new ResponseModel
+                    {
+                        Status = "Error",
+                        Message = "Folder  : " + pathfolder + "  not exist"
+                    };
+                }
+                
+                
 
+            }
+            return pathfolder;
+        }
     }
 }
