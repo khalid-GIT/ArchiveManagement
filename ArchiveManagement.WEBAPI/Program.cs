@@ -77,6 +77,13 @@ var connetionString = builder.Configuration.GetConnectionString("WebApiDatabase"
 //builder.Services.AddDbContext<ArchivesDbContext>(options => options.UseMySQL(connetionString, null));
 //FOR ENTITY FRAMEWORK DBCONTEXT
 builder.Services.AddDbContext<ArchivesDbContext>(options =>options.UseMySQL(connetionString, null));
+
+
+
+
+// Add services to the container.
+
+
 //FOR IDENTITY
 //TO CHANGE DEFAULT REQUIRED VALUES OF IDENTITY
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
@@ -121,10 +128,10 @@ builder.Services.AddTransient<IAuthServices,AuthServices>();
 builder.Services.AddTransient<IFolderServices, FolderServices>();
 builder.Services.AddTransient<IFileservices, Fileservices>();
 builder.Services.AddTransient<IFolderDal, FolderDal>();
-builder.Services.AddTransient<ITypeBusinessDocumentDAL, TypeBusinessDocumentDAL>();
-builder.Services.AddTransient<ITypeBusinessDocumentservices, TypeBusinessDocumentservices>();
-builder.Services.AddTransient<IDocumentsBusinessDAL, DocumentsBusinessDAL>(); 
-builder.Services.AddTransient<IDocumentsBusinessServices, DocumentsBusinessServices>();  
+//builder.Services.AddTransient<ITypeBusinessDocumentDAL, TypeBusinessDocumentDAL>();
+//builder.Services.AddTransient<ITypeBusinessDocumentservices, TypeBusinessDocumentservices>();
+//builder.Services.AddTransient<IDocumentsBusinessDAL, DocumentsBusinessDAL>();
+//builder.Services.AddTransient<IDocumentsBusinessServices, DocumentsBusinessServices>();  
   //builder.Services.AddSingleton
   //repositorie
 

@@ -20,24 +20,24 @@ namespace ArchiveManagement.BLL.Implementations.BusinessDocuments
         {
             _typeBusinessDocumentsDAL = typeBusinessDocumentdal;
         }
-        public IQueryable<TypeDocumetsBusiness> GetTypeBusinessDocuments()
-        {
-            return _typeBusinessDocumentsDAL.GetTypeBusinessDocuments();
-        }
+        //public IQueryable<TypeDocumetsBusiness> GetTypeBusinessDocuments()
+        //{
+        //    return _typeBusinessDocumentsDAL.GetTypeBusinessDocuments();
+        //}
 
-        public bool AddOrUpdateTypeBusiness(TypeDocumetsBusiness type)
-        {
-          return   _typeBusinessDocumentsDAL.AddOrUpdateTypeBusiness(type);
-        }
+        //public bool AddOrUpdateTypeBusiness(TypeDocumetsBusiness type)
+        //{
+        //  return   _typeBusinessDocumentsDAL.AddOrUpdateTypeBusiness(type);
+        //}
 
-        public bool DeleteTypeBusinessDocuments(int typeId)
-        {
-            return _typeBusinessDocumentsDAL.DeleteTypeBusinessDocuments(typeId);
-        }
-        public object  GetTypeBusinessDocumentsById(int id)
-        {
-            return _typeBusinessDocumentsDAL.GetTypeBusinessDocumentsById(id);
+        //public bool DeleteTypeBusinessDocuments(int typeId)
+        //{
+        //    return _typeBusinessDocumentsDAL.DeleteTypeBusinessDocuments(typeId);
+        //}
+        //public object  GetTypeBusinessDocumentsById(int id)
+        //{
+        //    return _typeBusinessDocumentsDAL.GetTypeBusinessDocumentsById(id);
 
-        }
+        //}
     }
 }

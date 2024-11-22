@@ -13,9 +13,9 @@ namespace ArchiveManagement.BLL.Interfaces.BusinessDocuments
 {
     public  interface ITypeBusinessDocumentservices
     {
-        bool AddOrUpdateTypeBusiness(TypeDocumetsBusiness type);
-        public IQueryable<TypeDocumetsBusiness> GetTypeBusinessDocuments();
-        bool DeleteTypeBusinessDocuments(int id);
-        object GetTypeBusinessDocumentsById(int id);
+        //bool AddOrUpdateTypeBusiness(TypeDocumetsBusiness type);
+        //public IQueryable<TypeDocumetsBusiness> GetTypeBusinessDocuments();
+        //bool DeleteTypeBusinessDocuments(int id);
+        //object GetTypeBusinessDocumentsById(int id);
     }
 }

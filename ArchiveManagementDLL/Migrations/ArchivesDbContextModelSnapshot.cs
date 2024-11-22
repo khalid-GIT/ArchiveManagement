@@ -16,56 +16,8 @@ namespace ArchiveManagement.DAL.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.31")
+                .HasAnnotation("ProductVersion", "6.0.36")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
-
-            modelBuilder.Entity("ArchiveManagement.DAL.Entities.DocumentsBusiness", b =>
-                {
-                    b.Property<string>("id")
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<DateTime?>("CreatedOn")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Date")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<double>("MtDt")
-                        .HasColumnType("double");
-
-                    b.Property<double>("MtHt")
-                        .HasColumnType("double");
-
-                    b.Property<double>("MtTtc")
-                        .HasColumnType("double");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Objet")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("idFiles")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<int?>("idTiers")
-                        .HasColumnType("int");
-
-                    b.Property<int>("idTypeBusiness")
-                        .HasColumnType("int");
-
-                    b.HasKey("id");
-
-                    b.ToTable("DocumentsBusiness");
-                });
 
             modelBuilder.Entity("ArchiveManagement.DAL.Entities.Files", b =>
                 {
@@ -136,15 +88,14 @@ namespace ArchiveManagement.DAL.Migrations
 
             modelBuilder.Entity("ArchiveManagement.DAL.Entities.TypeDocumetsBusiness", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<string>("id")
+                        .HasColumnType("varchar(255)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.HasKey("Id");
+                    b.HasKey("id");
 
                     b.ToTable("TypeDocumetsBusiness");
                 });
