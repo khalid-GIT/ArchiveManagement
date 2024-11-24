@@ -12,6 +12,7 @@ namespace ArchiveManagement.DAL.Entities
     {
         [Key]
         public string id { get; set; }
+        [Required]
         public string Name { get; set; }
         public string Description { get; set; }
         public DateTime? CreatedOn { get; set; }

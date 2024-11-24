@@ -113,7 +113,8 @@ builder.Services.AddAuthentication(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters()
     {
-        ValidateActor = true,
+        
+         ValidateActor = true,
         ValidateIssuer = true,
         ValidateAudience = true,
         RequireExpirationTime = true,   

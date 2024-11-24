@@ -51,8 +51,8 @@ namespace ArchiveManagement.WEBAPI.Controllers
         }
 
         [HttpPost("Register")]
-        [Authorize(Roles = "Admin")]
-        // [AllowAnonymous]
+      //  [Authorize(Roles = "Admin")]
+         [AllowAnonymous]
         public async Task<bool> Register(RegisterBindingModel userModel)
         {
             //CreatPassWordhash(request.Password, out byte[] passwordhash, out byte[] passwordsalt);
@@ -71,12 +71,12 @@ namespace ArchiveManagement.WEBAPI.Controllers
 
             if (result)
             {
-                if (await _roleManager.RoleExistsAsync(userModel.Role))
-                {
+                //if (await _roleManager.RoleExistsAsync(userModel.Role))
+                //{
 
-                    await _userManager.AddToRoleAsync(user, userModel.Role);
+                //    await _userManager.AddToRoleAsync(user, userModel.Role);
 
-                }
+                //}
             }
             return result;
         }

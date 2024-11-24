@@ -19,6 +19,20 @@ namespace ArchiveManagement.DAL.Migrations
                 .HasAnnotation("ProductVersion", "6.0.36")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+            modelBuilder.Entity("ArchiveManagement.DAL.Entities.DocumentsBusiness", b =>
+                {
+                    b.Property<string>("id")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("LastUpdate")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("id");
+
+                    b.ToTable("DocumentsBusiness");
+                });
+
             modelBuilder.Entity("ArchiveManagement.DAL.Entities.Files", b =>
                 {
                     b.Property<string>("id")
@@ -90,6 +104,10 @@ namespace ArchiveManagement.DAL.Migrations
                 {
                     b.Property<string>("id")
                         .HasColumnType("varchar(255)");
+
+                    b.Property<string>("LastUpdate")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Type")
                         .IsRequired()

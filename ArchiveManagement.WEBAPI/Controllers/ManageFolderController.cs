@@ -15,6 +15,7 @@ namespace ArchiveManagement.WEBAPI.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
+    [AllowAnonymous]
     public class ManageFolderController : ControllerBase
     {
         private readonly IFolderServices _folderServices;
@@ -26,6 +27,7 @@ namespace ArchiveManagement.WEBAPI.Controllers
         }
 
         [HttpPost("CreatFolder")]
+
         public object CreatFolder(string FolderName, string? parentFolderPath)
         {
             string roots = _configuration["RootPath"];
@@ -53,11 +55,14 @@ namespace ArchiveManagement.WEBAPI.Controllers
                 FolderPath = _folderServices.GetFolderPathById(parentFolderPath);
             }
             string pathToNewFolder = string.Empty;
+            string creatFolder = string.Empty;
             try
             {
                 if (!Directory.Exists(FolderPath != null ? FolderPath + "\\" + FolderName : roots + "\\" + FolderName))
                 {
-                    pathToNewFolder = System.IO.Path.Combine(FolderPath != null ? FolderPath : roots, FolderName);
+                 creatFolder = FolderPath != null ? FolderPath : roots;
+
+                    pathToNewFolder = System.IO.Path.Combine(creatFolder, FolderName);
                     if (!Directory.Exists(pathToNewFolder))
                     {
                         DirectoryInfo directory = Directory.CreateDirectory(pathToNewFolder);

@@ -16,17 +16,17 @@ namespace ArchiveManagement.DAL.Context
     public class ArchivesDbContext : IdentityDbContext<IdentityUser>
     {
         protected UserManager<IdentityUser> _userManager;
-        public ArchivesDbContext()
-        {
-        }
+        //public ArchivesDbContext()
+        //{
+        //}
 
         public ArchivesDbContext(DbContextOptions options) : base(options) { }
         public DbSet<Tier> Tiers { get; set; }
         public DbSet<Folder> Folders { get; set; }
-        public DbSet<Files> Files { get; set; } 
-        public DbSet<TypeDocumetsBusiness> TypeDocumetsBusiness {  get; set; }  
-     //   public DbSet<DocumentsBusiness> DocumentsBusiness {  get; set; }
-   
+        public DbSet<Files> Files { get; set; }
+        public DbSet<TypeDocumetsBusiness> TypeDocumetsBusiness { get; set; }
+        public DbSet<DocumentsBusiness> DocumentsBusiness { get; set; }
+
         //protected override void OnModelCreating(ModelBuilder builder)
         //{
         //    base.OnModelCreating(builder);
