@@ -74,5 +74,16 @@ namespace ArchiveManagement.BLL.Implementations
 
             return _folderDal.GetIdFolderByName(name);
         }
+        public List<Folder> GetAllFolder()
+        {
+            
+            return _folderDal.GetAllFolder();
+
+        } public List<Folder> GetAllFolderOfThisfolder(string id)
+        {
+            
+            return _folderDal.GetAllFolderOfThisfolder( id);
+
+        }
     }
 }

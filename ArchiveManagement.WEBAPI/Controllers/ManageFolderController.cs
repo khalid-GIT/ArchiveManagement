@@ -156,5 +156,35 @@ namespace ArchiveManagement.WEBAPI.Controllers
             }
             return pathfolder;
         }
+        [HttpGet("GetAllFolder")]
+        public object GetAllFolder()
+        {
+            var listefolder = _folderServices.GetAllFolder();
+            if (listefolder == null)
+            {
+                return new ResponseModel
+                {
+                    Status = "Error",
+                    Message = "No Folder  exist"
+                };
+            }
+            
+            return listefolder;
+        }
+        [HttpGet("GetAllFolderOfThisfolder")]
+        public object GetAllFolderOfThisfolder(string id)
+        {
+            var listefolder = _folderServices.GetAllFolderOfThisfolder( id);
+            if (listefolder == null)
+            {
+                return new ResponseModel
+                {
+                    Status = "Error",
+                    Message = "No Folder  exist"
+                };
+            }
+
+            return listefolder;
+        }
     }
 }

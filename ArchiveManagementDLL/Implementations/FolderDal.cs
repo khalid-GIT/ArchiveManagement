@@ -1,10 +1,12 @@
 ﻿using ArchiveManagement.DAL.Context;
+using ArchiveManagement.DAL.Entities;
 using ArchiveManagement.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace ArchiveManagement.DAL.Implementations
 {
@@ -46,6 +48,18 @@ namespace ArchiveManagement.DAL.Implementations
                 return folder.id;
             }
             return null;
+        }
+
+        public List<Folder> GetAllFolder()
+        {
+            var folder = _context.Folders.ToList();
+            return folder;
+
+        }    public List<Folder> GetAllFolderOfThisfolder(string id)
+        {
+            var folder = _context.Folders.Where(x=> x.idParent == id).ToList();
+            return folder;
+
         }
     }
 }
