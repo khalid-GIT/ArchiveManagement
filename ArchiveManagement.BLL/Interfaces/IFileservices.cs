@@ -8,7 +8,7 @@ namespace ArchiveManagement.BLL.Interfaces
 {
     public interface IFileservices
     {
-        bool SavePath(string id,string desc, string name, string idParent);
+        bool SavePath(string id,string desc, string name, string idParent,string typeDocument);
         
 
 

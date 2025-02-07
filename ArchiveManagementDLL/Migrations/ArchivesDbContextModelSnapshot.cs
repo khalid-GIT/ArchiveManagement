@@ -33,6 +33,43 @@ namespace ArchiveManagement.DAL.Migrations
                     b.ToTable("DocumentsBusiness");
                 });
 
+            modelBuilder.Entity("ArchiveManagement.DAL.Entities.DocumentsVentes", b =>
+                {
+                    b.Property<string>("id")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("LastUpdate")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<double>("Mdt")
+                        .HasColumnType("double");
+
+                    b.Property<double>("Mht")
+                        .HasColumnType("double");
+
+                    b.Property<double>("Mttc")
+                        .HasColumnType("double");
+
+                    b.Property<DateTime>("date")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("idCustomer")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("idParent")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("number")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("id");
+
+                    b.ToTable("DocumentsVentes");
+                });
+
             modelBuilder.Entity("ArchiveManagement.DAL.Entities.Files", b =>
                 {
                     b.Property<string>("id")
@@ -46,6 +83,10 @@ namespace ArchiveManagement.DAL.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("TypeDocument")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -77,6 +118,10 @@ namespace ArchiveManagement.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<string>("TypeDocument")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<string>("idParent")
                         .HasColumnType("longtext");
 
@@ -92,6 +137,18 @@ namespace ArchiveManagement.DAL.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("adresse")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("city")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("type")
                         .IsRequired()
                         .HasColumnType("longtext");
 

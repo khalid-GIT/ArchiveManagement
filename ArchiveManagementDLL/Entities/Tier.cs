@@ -12,6 +12,10 @@ namespace ArchiveManagement.DAL.Entities
         [Key]
         public int id { get; set; }
         public string Name { get; set; }
+        public string type { get; set; }
+        public string adresse { get; set; }
+        public string city { get; set; }
+
         //public  Tiers()
         //{
         //    Name = string.Empty;

@@ -29,7 +29,7 @@ namespace ArchiveManagement.WEBAPI.Controllers
         [HttpPost("upload")]
         [AllowAnonymous]
         //public async Task<IActionResult> Upload(IFormFile file, string _path,string descr,string idparent)
-         public async Task<IActionResult> Upload(IFormFile file,  string descr, string idparent)
+         public async Task<IActionResult> Upload(IFormFile file,  string descr, string idparent,string typeDocument)
         {
             if (file == null || file.Length == 0)
                 return BadRequest("No file uploaded.");
@@ -49,7 +49,7 @@ namespace ArchiveManagement.WEBAPI.Controllers
                 await file.CopyToAsync(stream);
             }
             //SAVE PATH FILES
-            var resultsave = _fileservices.SavePath(idFile, fileName,descr, idparent);
+            var resultsave = _fileservices.SavePath(idFile, fileName,descr, idparent, typeDocument);
             return Ok(new { filePath });
         }
     }

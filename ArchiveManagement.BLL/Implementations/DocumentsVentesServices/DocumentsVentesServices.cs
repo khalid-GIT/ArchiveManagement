@@ -16,27 +16,27 @@ namespace ArchiveManagement.BLL.Implementations.DocumentsVentesServices
          
 
         }
-        //public bool SavePath(string id, string desc, string name, string idParent)
-        //{
-        //    try
-        //    {
-        //        Files folderdto = new Files
-        //        {
-        //            id = Guid.NewGuid().ToString(),
-        //            //FolderPath = path,
-        //            Name = name,
-        //            Description = name,
-        //            idParent = idParent
-        //        };
-        //        _context.Add(folderdto);
-        //        _context.SaveChanges();
-        //        return false;
-        //    }
-        //    catch (IOException ioex)
-        //    {
-        //        Console.WriteLine(ioex.Message);
-        //    }
-        //    return true;
-        //}
+        public bool SavePath(string id, string desc, string name, string idParent)
+        {
+            try
+            {
+                Files folderdto = new Files
+                {
+                    id = Guid.NewGuid().ToString(),
+                    //FolderPath = path,
+                    Name = name,
+                    Description = name,
+                    idParent = idParent
+                };
+                _context.Add(folderdto);
+                _context.SaveChanges();
+                return false;
+            }
+            catch (IOException ioex)
+            {
+                Console.WriteLine(ioex.Message);
+            }
+            return true;
+        }
     }
 }

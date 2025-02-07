@@ -8,6 +8,7 @@ using ArchiveManagement.BLL.Implementations;
 using ArchiveManagement.DAL.Entities;
 using Google.Protobuf.WellKnownTypes;
 using ArchiveManagement.WEBAPI.Models;
+using Microsoft.IdentityModel.Tokens;
 
 namespace ArchiveManagement.WEBAPI.Controllers
 {
@@ -28,7 +29,7 @@ namespace ArchiveManagement.WEBAPI.Controllers
 
         [HttpPost("CreatFolder")]
 
-        public object CreatFolder(string FolderName, string? parentFolderPath)
+        public object CreatFolder(string FolderName, string? parentFolderPath, string TypeDocument)
         {
             string roots = _configuration["RootPath"];
             string idroot = parentFolderPath != null ? parentFolderPath : _folderServices.GetIdFolderByName("root");
@@ -43,11 +44,11 @@ namespace ArchiveManagement.WEBAPI.Controllers
                         Status = "Error",
                         Message = "Root not exist"
                     };
-                   // return "Root not exist";
+                    // return "Root not exist";
                 }
                 if (_folderServices.GetIdFolderByName("root") == null)
                 {
-                    var resultsav = _folderServices.SavePath(roots, "root", null);
+                    var resultsav = _folderServices.SavePath(roots, "root", null, TypeDocument);
                 }
             }
             else
@@ -60,7 +61,16 @@ namespace ArchiveManagement.WEBAPI.Controllers
             {
                 if (!Directory.Exists(FolderPath != null ? FolderPath + "\\" + FolderName : roots + "\\" + FolderName))
                 {
-                 creatFolder = FolderPath != null ? FolderPath : roots;
+                    if (FolderPath.Trim() != "" && !FolderPath.IsNullOrEmpty() && FolderPath.Trim() !=null)
+                    {
+
+                        creatFolder = FolderPath ;
+
+                    }
+                    else
+                    {
+                        creatFolder = roots;
+                    }
 
                     pathToNewFolder = System.IO.Path.Combine(creatFolder, FolderName);
                     if (!Directory.Exists(pathToNewFolder))
@@ -68,7 +78,7 @@ namespace ArchiveManagement.WEBAPI.Controllers
                         DirectoryInfo directory = Directory.CreateDirectory(pathToNewFolder);
                     }
                 }
-                var resultsave = _folderServices.SavePath(pathToNewFolder, FolderName, idroot);
+                var resultsave = _folderServices.SavePath(pathToNewFolder, FolderName, idroot, TypeDocument);
             }
             catch (IOException ioex)
             {
@@ -79,7 +89,7 @@ namespace ArchiveManagement.WEBAPI.Controllers
                 Status = "Success",
                 Message = "Folder : " + pathToNewFolder + " Created"
             };
-          //  return pathToNewFolder;
+            //  return pathToNewFolder;
         }
         [HttpDelete("delete")]
         public object folderDelete(string id)
@@ -106,11 +116,11 @@ namespace ArchiveManagement.WEBAPI.Controllers
                 else
                 {
                     string[] filePaths = Directory.GetFiles(pathfolder);
-            //      var pop= pathfolder.GetFileSystemInfos().Length ; 
+                    //      var pop= pathfolder.GetFileSystemInfos().Length ; 
                     IEnumerable<string> items = Directory.EnumerateFileSystemEntries(pathfolder);
 
 
-                    if (filePaths.Length > 0 || items!=null)
+                    if (filePaths.Length > 0 || items != null)
                     {
                         return new ResponseModel
                         {
@@ -150,8 +160,8 @@ namespace ArchiveManagement.WEBAPI.Controllers
                         Message = "Folder  : " + pathfolder + "  not exist"
                     };
                 }
-                
-                
+
+
 
             }
             return pathfolder;
@@ -168,13 +178,13 @@ namespace ArchiveManagement.WEBAPI.Controllers
                     Message = "No Folder  exist"
                 };
             }
-            
+
             return listefolder;
         }
         [HttpGet("GetAllFolderOfThisfolder")]
         public object GetAllFolderOfThisfolder(string id)
         {
-            var listefolder = _folderServices.GetAllFolderOfThisfolder( id);
+            var listefolder = _folderServices.GetAllFolderOfThisfolder(id);
             if (listefolder == null)
             {
                 return new ResponseModel

@@ -9,6 +9,6 @@ namespace ArchiveManagement.BLL.Interfaces.IDocumentsVentesServices
 
     public  interface IDocumentsVentesServices
     {
-    //    bool SavePath(string id, string desc, string name, string idParent);
+       bool SavePath(string id, string desc, string name, string idParent);
     }
 }

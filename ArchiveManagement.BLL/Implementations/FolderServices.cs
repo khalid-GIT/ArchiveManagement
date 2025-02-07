@@ -25,7 +25,7 @@ namespace ArchiveManagement.BLL.Implementations
             _context = archivesDbContext;
             _folderDal = folderDal;
         }
-        public bool SavePath(string path, string name, string idParent)
+        public bool SavePath(string path, string name, string idParent, string typeDocument)
         {
             try
             {
@@ -43,6 +43,7 @@ namespace ArchiveManagement.BLL.Implementations
                     FolderPath = path,
                     Name = name,
                     Description = name,
+                    TypeDocument=typeDocument,
                     idParent = idParent
                 };
 
