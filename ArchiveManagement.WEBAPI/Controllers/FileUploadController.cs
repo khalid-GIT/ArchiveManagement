@@ -8,6 +8,7 @@ using Google.Protobuf;
 using ArchiveManagement.BLL.Interfaces;
 using ArchiveManagement.BLL.Implementations;
 using Microsoft.AspNetCore.Authorization;
+using ArchiveManagement.DAL.Entities;
 
 
 namespace ArchiveManagement.WEBAPI.Controllers
@@ -19,17 +20,22 @@ namespace ArchiveManagement.WEBAPI.Controllers
     {
         private readonly IFileservices _fileservices;
         private readonly IFolderServices _folderServices;
+        private readonly ITypeDocumetsBusiness _typeDocumetsBusiness;
+        List<string> listeTypeDocuments = _typeDocumetsBusiness.GetAllTypeDocuments();
 
-        public FileUploadController(IFileservices fileservices, IFolderServices folderServices)
+
+        public FileUploadController(IFileservices fileservices, IFolderServices folderServices, ITypeDocumetsBusiness typeDocumetsBusiness)
         {
             _fileservices = fileservices;
             _folderServices = folderServices;
+            _typeDocumetsBusiness = typeDocumetsBusiness;
+           
         }
 
         [HttpPost("upload")]
         [AllowAnonymous]
         //public async Task<IActionResult> Upload(IFormFile file, string _path,string descr,string idparent)
-         public async Task<IActionResult> Upload(IFormFile file,  string descr, string idparent,string typeDocument)
+         public async Task<IActionResult> Upload(IFormFile file,  string descr, string idparent, _typeDocumetsBusiness.GetAllTypeDocuments)
         {
             if (file == null || file.Length == 0)
                 return BadRequest("No file uploaded.");

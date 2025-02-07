@@ -18,10 +18,7 @@ namespace ArchiveManagement.DAL.Implementations
         {
             _context = context;
         }
-        public void IFolderDal(ArchivesDbContext context)
-        {
-            _context = context;
-        }
+      
         public string GetFolderPathById(string id)
         {
             var folder = _context.Folders.Where(c => c.id == id).FirstOrDefault();
@@ -55,7 +52,8 @@ namespace ArchiveManagement.DAL.Implementations
             var folder = _context.Folders.ToList();
             return folder;
 
-        }    public List<Folder> GetAllFolderOfThisfolder(string id)
+        }  
+        public List<Folder> GetAllFolderOfThisfolder(string id)
         {
             var folder = _context.Folders.Where(x=> x.idParent == id).ToList();
             return folder;
