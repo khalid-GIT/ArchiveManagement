@@ -159,14 +159,14 @@ namespace ArchiveManagement.DAL.Migrations
 
             modelBuilder.Entity("ArchiveManagement.DAL.Entities.TypeDocumetsBusiness", b =>
                 {
-                    b.Property<string>("id")
-                        .HasColumnType("varchar(255)");
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
-                    b.Property<string>("LastUpdate")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                    b.Property<DateTime?>("LastUpdate")
+                        .HasColumnType("datetime(6)");
 
-                    b.Property<string>("Type")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("longtext");
 

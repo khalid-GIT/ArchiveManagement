@@ -16,6 +16,7 @@ using ArchiveManagement.BLL.Interfaces.IDocumentsVentesServices;
 using ArchiveManagement.BLL.Implementations.DocumentsVentesServices;
 using ArchiveManagement.DAL.Implementations.BusinessDocuments;
 using ArchiveManagement.DAL.Interfaces.BusinessDocuments;
+using System;
 
 
 
@@ -76,7 +77,7 @@ builder.Services.AddSwaggerGen(opt =>
 var connetionString = builder.Configuration.GetConnectionString("WebApiDatabase");
 //builder.Services.AddDbContext<ArchivesDbContext>(options => options.UseMySQL(connetionString, null));
 //FOR ENTITY FRAMEWORK DBCONTEXT
-builder.Services.AddDbContext<ArchivesDbContext>(options =>options.UseMySQL(connetionString, null));
+builder.Services.AddDbContext<ArchivesDbContext>(options =>options.UseMySQL(connetionString));
 
 
 
