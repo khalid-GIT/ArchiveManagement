@@ -20,22 +20,22 @@ namespace ArchiveManagement.WEBAPI.Controllers
     {
         private readonly IFileservices _fileservices;
         private readonly IFolderServices _folderServices;
-        private readonly ITypeDocumetsBusiness _typeDocumetsBusiness;
-        List<string> listeTypeDocuments = _typeDocumetsBusiness.GetAllTypeDocuments();
+        
+        
 
 
-        public FileUploadController(IFileservices fileservices, IFolderServices folderServices, ITypeDocumetsBusiness typeDocumetsBusiness)
+        public FileUploadController(IFileservices fileservices, IFolderServices folderServices)
         {
             _fileservices = fileservices;
             _folderServices = folderServices;
-            _typeDocumetsBusiness = typeDocumetsBusiness;
+           
            
         }
 
         [HttpPost("upload")]
         [AllowAnonymous]
         //public async Task<IActionResult> Upload(IFormFile file, string _path,string descr,string idparent)
-         public async Task<IActionResult> Upload(IFormFile file,  string descr, string idparent, _typeDocumetsBusiness.GetAllTypeDocuments)
+         public async Task<IActionResult> Upload(IFormFile file,  string descr, string idparent, string typeDocumetsBusiness)
         {
             if (file == null || file.Length == 0)
                 return BadRequest("No file uploaded.");
@@ -55,7 +55,7 @@ namespace ArchiveManagement.WEBAPI.Controllers
                 await file.CopyToAsync(stream);
             }
             //SAVE PATH FILES
-            var resultsave = _fileservices.SavePath(idFile, fileName,descr, idparent, typeDocument);
+            var resultsave = _fileservices.SavePath(idFile, fileName,descr, idparent, typeDocumetsBusiness);
             return Ok(new { filePath });
         }
     }

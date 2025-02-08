@@ -157,7 +157,7 @@ namespace ArchiveManagement.DAL.Migrations
                     b.ToTable("Tiers");
                 });
 
-            modelBuilder.Entity("ArchiveManagement.DAL.Entities.TypeDocumetsBusiness", b =>
+            modelBuilder.Entity("ArchiveManagement.DAL.Entities.TypeDocumetsbusiness", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()

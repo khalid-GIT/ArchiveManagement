@@ -12,10 +12,10 @@ using ArchiveManagement.DAL.Context;
 using Microsoft.EntityFrameworkCore;
 using ArchiveManagement.DAL.Interfaces;
 using ArchiveManagement.DAL.Implementations;
-using ArchiveManagement.BLL.Interfaces.IDocumentsVentesServices;
-using ArchiveManagement.BLL.Implementations.DocumentsVentesServices;
-using ArchiveManagement.DAL.Implementations.BusinessDocuments;
-using ArchiveManagement.DAL.Interfaces.BusinessDocuments;
+
+
+
+
 
 using System;
 
@@ -130,8 +130,8 @@ builder.Services.AddTransient<IFolderServices, FolderServices>();
 builder.Services.AddTransient<IFileservices, Fileservices>();
 builder.Services.AddTransient<IFolderDal, FolderDal>();
 builder.Services.AddTransient<ITypeDocumetsDal, TypeDocumetsDal>();
-builder.Services.AddTransient<ITypeDocumetsBusiness, TypeDocumetsBusines>();
-builder.Services.AddTransient<IDocumentsVentesServices, DocumentsVentesServices>();
+
+
 
 //builder.Services.AddTransient<ITypeBusinessDocumentDAL, TypeBusinessDocumentDAL>();
 //builder.Services.AddTransient<ITypeBusinessDocumentservices, TypeBusinessDocumentservices>();
