@@ -26,7 +26,9 @@ namespace ArchiveManagement.DAL.Context
         public DbSet<Files> Files { get; set; }
         public DbSet<TypeDocumets> TypeDocumetsBusiness { get; set; }
         public DbSet<DocumentsBusiness> DocumentsBusiness { get; set; }
-        public DbSet<DocumentsVentes> DocumentsVentes { get; set; }
+        public DbSet<DocumentsVentes> DocumentsVentes { get; set; } 
+        public DbSet<FamilleDocuments> FamilleDocuments { get; set; }
+        
        
 
         //protected override void OnModelCreating(ModelBuilder builder)

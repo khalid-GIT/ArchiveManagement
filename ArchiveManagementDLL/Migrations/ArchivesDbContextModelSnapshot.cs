@@ -70,6 +70,24 @@ namespace ArchiveManagement.DAL.Migrations
                     b.ToTable("DocumentsVentes");
                 });
 
+            modelBuilder.Entity("ArchiveManagement.DAL.Entities.FamilleDocuments", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("LastUpdate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("id");
+
+                    b.ToTable("FamilleDocuments");
+                });
+
             modelBuilder.Entity("ArchiveManagement.DAL.Entities.Files", b =>
                 {
                     b.Property<string>("id")
@@ -157,10 +175,13 @@ namespace ArchiveManagement.DAL.Migrations
                     b.ToTable("Tiers");
                 });
 
-            modelBuilder.Entity("ArchiveManagement.DAL.Entities.TypeDocumetsbusiness", b =>
+            modelBuilder.Entity("ArchiveManagement.DAL.Entities.TypeDocumets", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("Familledocumentsid")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("LastUpdate")
@@ -170,7 +191,12 @@ namespace ArchiveManagement.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<int>("idFamilledocuments")
+                        .HasColumnType("int");
+
                     b.HasKey("id");
+
+                    b.HasIndex("Familledocumentsid");
 
                     b.ToTable("TypeDocumetsBusiness");
                 });
@@ -367,6 +393,17 @@ namespace ArchiveManagement.DAL.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("ArchiveManagement.DAL.Entities.TypeDocumets", b =>
+                {
+                    b.HasOne("ArchiveManagement.DAL.Entities.FamilleDocuments", "Familledocuments")
+                        .WithMany("Documets")
+                        .HasForeignKey("Familledocumentsid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Familledocuments");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -416,6 +453,11 @@ namespace ArchiveManagement.DAL.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("ArchiveManagement.DAL.Entities.FamilleDocuments", b =>
+                {
+                    b.Navigation("Documets");
                 });
 #pragma warning restore 612, 618
         }
