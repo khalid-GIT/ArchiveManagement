@@ -15,10 +15,15 @@ namespace ArchiveManagement.DAL.Entities
         [Required]
         public string Name { get; set; }
         public string Description { get; set; }
-        public string TypeDocument { get; set; }
+       
         public DateTime? CreatedOn { get; set; }
-        
+        public string LastUpdate { get; set; }
         [ForeignKey("Folder")]
         public string? idParent { get; set; }
+
+        // Clé étrangère
+        [ForeignKey("TypeDocuments")]
+        public int TypeDocumentid { get; set; }
+        public TypeDocuments TypeDocuments { get; set; }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using ArchiveManagement.DAL.Entities;
+using ArchiveManagement.DAL.Entities.Business;
+using ArchiveManagement.DAL.Entities.Settings;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -24,13 +26,13 @@ namespace ArchiveManagement.DAL.Context
         public DbSet<Tier> Tiers { get; set; }
         public DbSet<Folder> Folders { get; set; }
         public DbSet<Files> Files { get; set; }
-        public DbSet<TypeDocumets> TypeDocumetsBusiness { get; set; }
-        public DbSet<DocumentsBusiness> DocumentsBusiness { get; set; }
-        public DbSet<DocumentsVentes> DocumentsVentes { get; set; } 
+        public DbSet<TypeDocuments> TypeDocumetsBusiness { get; set; }
+        public DbSet<DocumentBusiness> DocumentBusiness { get; set; }
+        public DbSet<ModeReglement> ModeReglements { get; set; } 
         public DbSet<FamilleDocuments> FamilleDocuments { get; set; }
+        public DbSet<ReglementsDocumentsBusiness> ReglementsDocumentsBusiness { get; set; }
+        public DbSet<City> Citys { get; set; }
         
-       
-
         //protected override void OnModelCreating(ModelBuilder builder)
         //{
         //    base.OnModelCreating(builder);

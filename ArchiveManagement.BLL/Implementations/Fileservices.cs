@@ -31,7 +31,7 @@ namespace ArchiveManagement.BLL.Implementations
                     //FolderPath = path,
                     Name = name,
                     Description = name,
-                    TypeDocument= typeDocument,
+                   // TypeDocument= typeDocument,
                     idParent = idParent
                 };
                 _context.Add(folderdto);
