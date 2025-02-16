@@ -69,7 +69,8 @@ namespace ArchiveManagement.DAL.Migrations
 
                     b.HasKey("id");
 
-                    b.HasIndex("TypeDocumentid");
+                    b.HasIndex("TypeDocumentid")
+                        .IsUnique();
 
                     b.ToTable("Files");
 
@@ -88,6 +89,9 @@ namespace ArchiveManagement.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<int>("FamilleDocumentsid")
+                        .HasColumnType("int");
+
                     b.Property<string>("FolderPath")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -96,14 +100,15 @@ namespace ArchiveManagement.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("TypeDocument")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.Property<string>("idParent")
                         .HasColumnType("longtext");
 
+                    b.Property<string>("idfamilleDocuments")
+                        .HasColumnType("longtext");
+
                     b.HasKey("id");
+
+                    b.HasIndex("FamilleDocumentsid");
 
                     b.ToTable("Folders");
                 });
@@ -186,8 +191,6 @@ namespace ArchiveManagement.DAL.Migrations
                         .HasColumnType("longtext");
 
                     b.HasKey("id");
-
-                    b.HasIndex("Familledocumentsid");
 
                     b.ToTable("TypeDocumetsBusiness");
                 });
@@ -445,12 +448,23 @@ namespace ArchiveManagement.DAL.Migrations
             modelBuilder.Entity("ArchiveManagement.DAL.Entities.Files", b =>
                 {
                     b.HasOne("ArchiveManagement.DAL.Entities.TypeDocuments", "TypeDocuments")
-                        .WithMany()
-                        .HasForeignKey("TypeDocumentid")
+                        .WithOne("Files")
+                        .HasForeignKey("ArchiveManagement.DAL.Entities.Files", "TypeDocumentid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("TypeDocuments");
+                });
+
+            modelBuilder.Entity("ArchiveManagement.DAL.Entities.Folder", b =>
+                {
+                    b.HasOne("ArchiveManagement.DAL.Entities.FamilleDocuments", "FamilleDocuments")
+                        .WithMany("Folder")
+                        .HasForeignKey("FamilleDocumentsid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("FamilleDocuments");
                 });
 
             modelBuilder.Entity("ArchiveManagement.DAL.Entities.Settings.Tier", b =>
@@ -462,17 +476,6 @@ namespace ArchiveManagement.DAL.Migrations
                         .IsRequired();
 
                     b.Navigation("Citys");
-                });
-
-            modelBuilder.Entity("ArchiveManagement.DAL.Entities.TypeDocuments", b =>
-                {
-                    b.HasOne("ArchiveManagement.DAL.Entities.FamilleDocuments", "Familledocuments")
-                        .WithMany("Documets")
-                        .HasForeignKey("Familledocumentsid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Familledocuments");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -558,12 +561,18 @@ namespace ArchiveManagement.DAL.Migrations
 
             modelBuilder.Entity("ArchiveManagement.DAL.Entities.FamilleDocuments", b =>
                 {
-                    b.Navigation("Documets");
+                    b.Navigation("Folder");
                 });
 
             modelBuilder.Entity("ArchiveManagement.DAL.Entities.Settings.City", b =>
                 {
                     b.Navigation("Tiers");
+                });
+
+            modelBuilder.Entity("ArchiveManagement.DAL.Entities.TypeDocuments", b =>
+                {
+                    b.Navigation("Files")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
