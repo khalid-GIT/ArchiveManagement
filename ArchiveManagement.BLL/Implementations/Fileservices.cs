@@ -1,7 +1,7 @@
 ﻿using ArchiveManagement.BLL.Interfaces;
 using ArchiveManagement.DAL.Context;
 using ArchiveManagement.DAL.Entities;
-
+using ArchiveManagement.DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -15,13 +15,16 @@ namespace ArchiveManagement.BLL.Implementations
     {
         private ArchivesDbContext _context;
         private IFolderServices _folderServices;
+      
+        private IFilesDal  _filesDal;
 
-        public Fileservices(ArchivesDbContext archivesDbContext, IFolderServices folderServices)
+        public Fileservices(ArchivesDbContext archivesDbContext, IFolderServices folderServices, IFilesDal filesDal)
         {
             _context = archivesDbContext;
             _folderServices = folderServices;
+            _filesDal = filesDal;
         }
-        public bool SavePath(string id, string desc, string name, string idParent,string typeDocument)
+        public bool SavePath(string id,  string name, string idParent)
         {
             try
             {
@@ -29,8 +32,8 @@ namespace ArchiveManagement.BLL.Implementations
                 {
                     id = Guid.NewGuid().ToString(),
                     //FolderPath = path,
-                    Name = name,
-                    Description = name,
+                    //Name = name,
+                  //  Description = name,
                    // TypeDocument= typeDocument,
                     idParent = idParent
                 };
@@ -43,6 +46,11 @@ namespace ArchiveManagement.BLL.Implementations
                 Console.WriteLine(ioex.Message);
             }
             return true;
+        }
+        public async Task<List<Files>> GetFilsByIdPrentFolder(string id)
+        {
+            return await _filesDal.GetFilsByIdPrentFolder(id);
+          
         }
     }
 }

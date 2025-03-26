@@ -130,6 +130,9 @@ builder.Services.AddTransient<IFolderServices, FolderServices>();
 builder.Services.AddTransient<IFileservices, Fileservices>();
 builder.Services.AddTransient<IFolderDal, FolderDal>();
 builder.Services.AddTransient<ITypeDocumetsDal, TypeDocumetsDal>();
+builder.Services.AddTransient<IFilesDal, FilesDal>();
+
+
 
 
 

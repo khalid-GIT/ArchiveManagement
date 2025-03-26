@@ -35,7 +35,8 @@ namespace ArchiveManagement.WEBAPI.Controllers
         [HttpPost("upload")]
         [AllowAnonymous]
         //public async Task<IActionResult> Upload(IFormFile file, string _path,string descr,string idparent)
-         public async Task<IActionResult> Upload(IFormFile file,  string descr, string idparent, string typeDocumetsBusiness)
+         //public async Task<IActionResult> Upload(IFormFile file,  string descr, string idparent, string typeDocumetsBusiness)
+         public async Task<IActionResult> Upload([FromForm]  IFormFile file, [FromForm] string idparent)
         {
             if (file == null || file.Length == 0)
                 return BadRequest("No file uploaded.");
@@ -55,8 +56,20 @@ namespace ArchiveManagement.WEBAPI.Controllers
                 await file.CopyToAsync(stream);
             }
             //SAVE PATH FILES
-            var resultsave = _fileservices.SavePath(idFile, fileName,descr, idparent, typeDocumetsBusiness);
+            var resultsave = _fileservices.SavePath(idFile, fileName, idparent);
             return Ok(new { filePath });
+        }
+
+        [HttpGet("GetFilesByParent/{folderId}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetFilesByParent(string folderId)
+        {
+            var files = await _fileservices.GetFilsByIdPrentFolder(folderId);
+
+            if (files == null || files.Count == 0)
+                return NotFound("Aucun fichier trouvé.");
+
+            return Ok(files);
         }
     }
 }

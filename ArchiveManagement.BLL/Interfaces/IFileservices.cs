@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ArchiveManagement.DAL.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +9,8 @@ namespace ArchiveManagement.BLL.Interfaces
 {
     public interface IFileservices
     {
-        bool SavePath(string id,string desc, string name, string idParent,string typeDocument);
-        
+        bool SavePath(string id, string name, string idParent);
+         Task<List<Files>> GetFilsByIdPrentFolder(string id);
 
 
     }
