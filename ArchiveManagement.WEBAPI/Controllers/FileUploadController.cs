@@ -9,6 +9,7 @@ using ArchiveManagement.BLL.Interfaces;
 using ArchiveManagement.BLL.Implementations;
 using Microsoft.AspNetCore.Authorization;
 using ArchiveManagement.DAL.Entities;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace ArchiveManagement.WEBAPI.Controllers
@@ -36,7 +37,7 @@ namespace ArchiveManagement.WEBAPI.Controllers
         [AllowAnonymous]
         //public async Task<IActionResult> Upload(IFormFile file, string _path,string descr,string idparent)
          //public async Task<IActionResult> Upload(IFormFile file,  string descr, string idparent, string typeDocumetsBusiness)
-         public async Task<IActionResult> Upload([FromForm]  IFormFile file, [FromForm] string idparent)
+         public async Task<IActionResult> Upload(IFormFile file, [FromHeader] string idParent)
         {
             if (file == null || file.Length == 0)
                 return BadRequest("No file uploaded.");
@@ -46,7 +47,7 @@ namespace ArchiveManagement.WEBAPI.Controllers
             var idFile= Guid.NewGuid().ToString(); 
             var fileName=Path.GetFileName(file.FileName);
             //get folder by id
-            string pathparent = _folderServices.GetFolderPathById(idparent);
+            string pathparent = _folderServices.GetFolderPathById(idParent);
             var found = fileName.IndexOf(".");
             fileName = fileName.Substring(0, found);
             var filePath = @pathparent + "\\"+ idFile + extension; // Path.GetTempFileName();
@@ -56,7 +57,7 @@ namespace ArchiveManagement.WEBAPI.Controllers
                 await file.CopyToAsync(stream);
             }
             //SAVE PATH FILES
-            var resultsave = _fileservices.SavePath(idFile, fileName, idparent);
+            var resultsave = _fileservices.SavePath(idFile, fileName, idParent);
             return Ok(new { filePath });
         }
 
@@ -70,6 +71,17 @@ namespace ArchiveManagement.WEBAPI.Controllers
                 return NotFound("Aucun fichier trouvé.");
 
             return Ok(files);
+        }
+        [HttpDelete("DeleteFile/{id}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> DeleteFile(string id)
+        {
+           bool  Results=  await  _fileservices.DeleteFile(id);  
+            if (!Results)
+            {
+                return NotFound(new { message = "Fichier introuvable" });
+            }
+            return Ok(new { message = "Fichier supprimé avec succès" });
         }
     }
 }

@@ -11,7 +11,7 @@ namespace ArchiveManagement.BLL.Interfaces
     {
         bool SavePath(string id, string name, string idParent);
          Task<List<Files>> GetFilsByIdPrentFolder(string id);
-
+        Task<bool> DeleteFile(string id);
 
     }
 }

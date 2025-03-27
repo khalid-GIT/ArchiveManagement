@@ -52,5 +52,10 @@ namespace ArchiveManagement.BLL.Implementations
             return await _filesDal.GetFilsByIdPrentFolder(id);
           
         }
+        public async Task<bool> DeleteFile(string id)
+        {
+            return await _filesDal.DeleteFile(id);
+
+        }
     }
 }
