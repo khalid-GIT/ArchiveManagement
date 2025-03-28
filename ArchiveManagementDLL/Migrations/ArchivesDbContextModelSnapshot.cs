@@ -43,11 +43,19 @@ namespace ArchiveManagement.DAL.Migrations
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime?>("CreatedOn")
-                        .IsRequired()
                         .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Discriminator")
                         .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("extension")
                         .HasColumnType("longtext");
 
                     b.Property<string>("idParent")
@@ -163,9 +171,6 @@ namespace ArchiveManagement.DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("Familledocumentsid")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("LastUpdate")
                         .HasColumnType("datetime(6)");
 
@@ -174,8 +179,6 @@ namespace ArchiveManagement.DAL.Migrations
                         .HasColumnType("longtext");
 
                     b.HasKey("id");
-
-                    b.HasIndex("Familledocumentsid");
 
                     b.ToTable("TypeDocumetsBusiness");
                 });
@@ -450,17 +453,6 @@ namespace ArchiveManagement.DAL.Migrations
                         .IsRequired();
 
                     b.Navigation("Citys");
-                });
-
-            modelBuilder.Entity("ArchiveManagement.DAL.Entities.TypeDocuments", b =>
-                {
-                    b.HasOne("ArchiveManagement.DAL.Entities.FamilleDocuments", "FamilleDocuments")
-                        .WithMany()
-                        .HasForeignKey("Familledocumentsid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("FamilleDocuments");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

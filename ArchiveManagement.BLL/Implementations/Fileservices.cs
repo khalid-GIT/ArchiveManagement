@@ -24,22 +24,22 @@ namespace ArchiveManagement.BLL.Implementations
             _folderServices = folderServices;
             _filesDal = filesDal;
         }
-        public bool SavePath(string id,  string name, string idParent)
+        public bool SavePath(string id,  string name, string idParent, string extension)
         {
             try
             {
                 Files folderdto = new Files
                 {
-                    id = Guid.NewGuid().ToString(),
+                    id = id,    //Guid.NewGuid().ToString(),
                     //FolderPath = path,
-                    //Name = name,
-                  //  Description = name,
-                   // TypeDocument= typeDocument,
+                    Name = name,
+                     extension = extension,
+                    // TypeDocument= typeDocument,
                     idParent = idParent
                 };
                 _context.Add(folderdto);
                 _context.SaveChanges();
-                return false;
+                return true;
             }
             catch (IOException ioex)
             {
@@ -56,6 +56,10 @@ namespace ArchiveManagement.BLL.Implementations
         {
             return await _filesDal.DeleteFile(id);
 
+        }
+        public string GetFilePath(string id)
+        {
+            return  _filesDal.GetFilePath(id);
         }
     }
 }

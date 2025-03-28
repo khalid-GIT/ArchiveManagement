@@ -15,7 +15,8 @@ namespace ArchiveManagement.DAL.Entities
         
         public string? Name { get; set; }
         public string? Description { get; set; }
-       
+        public string? extension { get; set; }
+        //extension
         public DateTime? CreatedOn { get; set; }
         //public string LastUpdate { get; set; }
         [ForeignKey("Folder")]

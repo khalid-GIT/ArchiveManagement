@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 
 using System.IO;
+using System;
+
 using System.Threading.Tasks;
 using Google.Protobuf;
 using ArchiveManagement.BLL.Interfaces;
@@ -57,7 +59,7 @@ namespace ArchiveManagement.WEBAPI.Controllers
                 await file.CopyToAsync(stream);
             }
             //SAVE PATH FILES
-            var resultsave = _fileservices.SavePath(idFile, fileName, idParent);
+            var resultsave = _fileservices.SavePath(idFile, fileName, idParent,extension);
             return Ok(new { filePath });
         }
 
@@ -76,12 +78,44 @@ namespace ArchiveManagement.WEBAPI.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> DeleteFile(string id)
         {
-           bool  Results=  await  _fileservices.DeleteFile(id);  
+            try {
+                //Supprimer le fichier physique 
+                string filePath = _fileservices.GetFilePath(id);
+
+                if (System.IO.File.Exists(filePath)) // Vérifie si le fichier existe
+                {
+                    System.IO.File.Delete(filePath); // Supprime le fichier
+                    Console.WriteLine($"Fichier supprimé : {filePath}");
+
+                }
+                else
+                {
+                    Console.WriteLine("Fichier introuvable.");
+
+                }
+
+                bool Results = await _fileservices.DeleteFile(id);
             if (!Results)
             {
                 return NotFound(new { message = "Fichier introuvable" });
             }
+
+           
+
             return Ok(new { message = "Fichier supprimé avec succès" });
+        }
+            catch (UnauthorizedAccessException)
+            {
+                return Forbid(); // L'utilisateur n'a pas les droits
+            }
+            catch (IOException ex)
+            {
+                return Conflict(new { message = "Impossible de supprimer le fichier. Il est peut-être utilisé par un autre processus.", error = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Erreur interne du serveur.", error = ex.Message });
+            }
         }
     }
 }
