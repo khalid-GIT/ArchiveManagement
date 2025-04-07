@@ -13,5 +13,6 @@ namespace ArchiveManagement.BLL.Interfaces
          Task<List<Files>> GetFilsByIdPrentFolder(string id);
         Task<bool> DeleteFile(string id);
         string GetFilePath(string id);
+        Task<Files> GetFileById(string fileId);
     }
 }

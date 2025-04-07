@@ -12,6 +12,8 @@ using ArchiveManagement.BLL.Implementations;
 using Microsoft.AspNetCore.Authorization;
 using ArchiveManagement.DAL.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Metadata;
+using ArchiveManagement.BLL.Dtos;
 
 
 namespace ArchiveManagement.WEBAPI.Controllers
@@ -116,6 +118,67 @@ namespace ArchiveManagement.WEBAPI.Controllers
             {
                 return StatusCode(500, new { message = "Erreur interne du serveur.", error = ex.Message });
             }
+        }
+
+        [HttpGet("DownloadFile/{id}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> DownloadFile(string id)
+        {
+            try
+            {
+                // 🔹 Récupérer le fichier depuis la base de données ou le système de fichiers
+                var file = await _fileservices.GetFileById(id);
+                if (file == null)
+                {
+                    return NotFound(new { message = "Fichier introuvable" });
+                }
+
+                // 🔹 Construire le chemin complet du fichier
+                //string filePath = Path.Combine("wwwroot/uploads", file.FileName);
+                string filePath = _fileservices.GetFilePath(id);
+                if (!System.IO.File.Exists(filePath))
+                {
+                    return NotFound(new { message = "Fichier non trouvé sur le serveur" });
+                }
+
+                // 🔹 Lire le fichier et le retourner en réponse
+                var fileBytes = System.IO.File.ReadAllBytes(filePath);
+
+
+               // string MyExtention = file.extension.Substring(1,4);
+
+                //     byte[] fileBytes = await System.IO.File.ReadAllBytesAsync(filePath);
+
+                //Suitch MyExtention
+                //    case "pdf"
+
+
+
+                        return File(fileBytes, "application/pdf",  filePath);
+          //      return File(fileBytes, "application/octet-stream", filePath);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Erreur interne", details = ex.Message });
+            }
+        }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateDocument(int id, [FromBody] Document updatedDoc)
+        {
+            //if (id != updatedDoc.Name)
+            //{
+            //    return BadRequest("L'ID du document ne correspond pas.");
+            //}
+            var documentsDto = new DocumentsDto
+            {
+               // id = updatedDoc.Name
+               
+            };
+
+
+
+            return Ok();
         }
     }
 }

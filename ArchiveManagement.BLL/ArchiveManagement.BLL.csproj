@@ -15,9 +15,4 @@
     <ProjectReference Include="..\ArchiveManagementDLL\ArchiveManagement.DAL.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Implementations\Business\" />
-    <Folder Include="Interfaces\Business\" />
-  </ItemGroup>
-
 </Project>

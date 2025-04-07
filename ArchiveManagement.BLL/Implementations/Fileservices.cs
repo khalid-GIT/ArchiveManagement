@@ -61,5 +61,10 @@ namespace ArchiveManagement.BLL.Implementations
         {
             return  _filesDal.GetFilePath(id);
         }
+      public  Task<Files> GetFileById(string fileId)
+        {
+            return _filesDal.GetFileById(fileId);
+
+        }
     }
 }

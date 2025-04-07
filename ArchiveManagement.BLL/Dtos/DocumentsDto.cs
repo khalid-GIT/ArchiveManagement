@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ArchiveManagement.BLL.Dtos
 {
-    public  class DocumentsVentesDto
+    public  class DocumentsDto
 
     {
         public string id { get; set; }
@@ -17,7 +17,7 @@ namespace ArchiveManagement.BLL.Dtos
         public Double Mdt { get; set; }
         public Double Mttc { get; set; }
 
-        public string idCustomer { get; set; }
+        public string Tiersid { get; set; }
 
         public string LastUpdate { get; set; }
         public string? idParent { get; set; }
