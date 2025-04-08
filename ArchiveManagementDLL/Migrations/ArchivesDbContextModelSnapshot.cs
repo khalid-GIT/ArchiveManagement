@@ -48,10 +48,6 @@ namespace ArchiveManagement.DAL.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.Property<string>("Name")
                         .HasColumnType("longtext");
 
@@ -63,9 +59,7 @@ namespace ArchiveManagement.DAL.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Files");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Files");
+                    b.ToTable("Files", (string)null);
                 });
 
             modelBuilder.Entity("ArchiveManagement.DAL.Entities.Folder", b =>
@@ -368,17 +362,14 @@ namespace ArchiveManagement.DAL.Migrations
                         .HasColumnType("double");
 
                     b.Property<double>("Mttc")
-                        .HasColumnType("double")
-                        .HasColumnName("DocumentBusiness_Mttc");
+                        .HasColumnType("double");
 
                     b.Property<string>("Tiersid")
                         .IsRequired()
-                        .HasColumnType("varchar(255)")
-                        .HasColumnName("DocumentBusiness_Tiersid");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<DateTime>("date")
-                        .HasColumnType("datetime(6)")
-                        .HasColumnName("DocumentBusiness_date");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("number")
                         .IsRequired()
@@ -386,7 +377,7 @@ namespace ArchiveManagement.DAL.Migrations
 
                     b.HasIndex("Tiersid");
 
-                    b.HasDiscriminator().HasValue("DocumentBusiness");
+                    b.ToTable("DocumentBusiness", (string)null);
                 });
 
             modelBuilder.Entity("ArchiveManagement.DAL.Entities.Business.ReglementsDocumentsBusiness", b =>
@@ -416,7 +407,7 @@ namespace ArchiveManagement.DAL.Migrations
 
                     b.HasIndex("Tiersid1");
 
-                    b.HasDiscriminator().HasValue("ReglementsDocumentsBusiness");
+                    b.ToTable("ReglementsDocumentsBusiness", (string)null);
                 });
 
             modelBuilder.Entity("ArchiveManagement.DAL.Entities.Folder", b =>
@@ -500,6 +491,12 @@ namespace ArchiveManagement.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("ArchiveManagement.DAL.Entities.Files", null)
+                        .WithOne()
+                        .HasForeignKey("ArchiveManagement.DAL.Entities.Business.DocumentBusiness", "id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Tiers");
                 });
 
@@ -514,6 +511,12 @@ namespace ArchiveManagement.DAL.Migrations
                     b.HasOne("ArchiveManagement.DAL.Entities.Settings.Tier", "Tiers")
                         .WithMany()
                         .HasForeignKey("Tiersid1");
+
+                    b.HasOne("ArchiveManagement.DAL.Entities.Files", null)
+                        .WithOne()
+                        .HasForeignKey("ArchiveManagement.DAL.Entities.Business.ReglementsDocumentsBusiness", "id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("ModeReglements");
 
