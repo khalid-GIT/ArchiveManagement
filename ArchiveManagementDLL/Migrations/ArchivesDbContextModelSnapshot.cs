@@ -21,9 +21,9 @@ namespace ArchiveManagement.DAL.Migrations
 
             modelBuilder.Entity("ArchiveManagement.DAL.Entities.FamilleDocuments", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<string>("id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<DateTime?>("LastUpdate")
                         .HasColumnType("datetime(6)");
@@ -80,8 +80,9 @@ namespace ArchiveManagement.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("FamilleDocumentsid")
-                        .HasColumnType("int");
+                    b.Property<string>("FamilleDocumentsid")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("FolderPath")
                         .IsRequired()
@@ -135,9 +136,8 @@ namespace ArchiveManagement.DAL.Migrations
 
             modelBuilder.Entity("ArchiveManagement.DAL.Entities.Settings.Tier", b =>
                 {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<string>("id")
+                        .HasColumnType("varchar(255)");
 
                     b.Property<int>("Cityid")
                         .HasColumnType("int");
@@ -163,24 +163,6 @@ namespace ArchiveManagement.DAL.Migrations
                     b.HasIndex("Cityid");
 
                     b.ToTable("Tiers");
-                });
-
-            modelBuilder.Entity("ArchiveManagement.DAL.Entities.TypeDocuments", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("LastUpdate")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("id");
-
-                    b.ToTable("TypeDocumetsBusiness");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -389,8 +371,9 @@ namespace ArchiveManagement.DAL.Migrations
                         .HasColumnType("double")
                         .HasColumnName("DocumentBusiness_Mttc");
 
-                    b.Property<int>("Tiersid")
-                        .HasColumnType("int")
+                    b.Property<string>("Tiersid")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("DocumentBusiness_Tiersid");
 
                     b.Property<DateTime>("date")
@@ -423,12 +406,15 @@ namespace ArchiveManagement.DAL.Migrations
                     b.Property<int>("Tiersid")
                         .HasColumnType("int");
 
+                    b.Property<string>("Tiersid1")
+                        .HasColumnType("varchar(255)");
+
                     b.Property<DateTime>("date")
                         .HasColumnType("datetime(6)");
 
                     b.HasIndex("ModeReglementsid");
 
-                    b.HasIndex("Tiersid");
+                    b.HasIndex("Tiersid1");
 
                     b.HasDiscriminator().HasValue("ReglementsDocumentsBusiness");
                 });
@@ -509,7 +495,7 @@ namespace ArchiveManagement.DAL.Migrations
             modelBuilder.Entity("ArchiveManagement.DAL.Entities.Business.DocumentBusiness", b =>
                 {
                     b.HasOne("ArchiveManagement.DAL.Entities.Settings.Tier", "Tiers")
-                        .WithMany()
+                        .WithMany("DocumentBusiness")
                         .HasForeignKey("Tiersid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -527,9 +513,7 @@ namespace ArchiveManagement.DAL.Migrations
 
                     b.HasOne("ArchiveManagement.DAL.Entities.Settings.Tier", "Tiers")
                         .WithMany()
-                        .HasForeignKey("Tiersid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Tiersid1");
 
                     b.Navigation("ModeReglements");
 
@@ -544,6 +528,11 @@ namespace ArchiveManagement.DAL.Migrations
             modelBuilder.Entity("ArchiveManagement.DAL.Entities.Settings.City", b =>
                 {
                     b.Navigation("Tiers");
+                });
+
+            modelBuilder.Entity("ArchiveManagement.DAL.Entities.Settings.Tier", b =>
+                {
+                    b.Navigation("DocumentBusiness");
                 });
 #pragma warning restore 612, 618
         }

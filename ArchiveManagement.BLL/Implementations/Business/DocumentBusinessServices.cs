@@ -1,4 +1,6 @@
 ﻿using ArchiveManagement.BLL.Dtos;
+using ArchiveManagement.BLL.Interfaces.Business;
+using ArchiveManagement.DAL.Entities;
 using ArchiveManagement.DAL.Entities.Business;
 using ArchiveManagement.DAL.Implementations.Business;
 using ArchiveManagement.DAL.Interfaces.Business;
@@ -10,11 +12,11 @@ using System.Threading.Tasks;
 
 namespace ArchiveManagement.BLL.Implementations.Business
 {
-    internal class DocumentBusinessServices
+    public  class DocumentBusinessServices: IDocumentBusinessServices
     {
-        private DocumentBusinessDal _documentBusinessDal;
+        private IDocumentBusinessDal _documentBusinessDal;
 
-        public DocumentBusinessServices(DocumentBusinessDal documentBusinessDal)
+        public DocumentBusinessServices(IDocumentBusinessDal documentBusinessDal)
         {
             _documentBusinessDal = documentBusinessDal;
 
@@ -35,6 +37,11 @@ namespace ArchiveManagement.BLL.Implementations.Business
             };
 
             return _documentBusinessDal.UpdateDocuments(document);
+
+        }
+        public async Task<List<DocumentBusiness>> GetDcumetsBusinessByIdPrentFolder(string id)
+        {
+            return await _documentBusinessDal.GetDocumentBusinessByParent(id);
 
         }
     }

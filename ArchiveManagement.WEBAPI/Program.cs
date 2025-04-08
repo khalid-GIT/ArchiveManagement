@@ -18,6 +18,10 @@ using ArchiveManagement.DAL.Implementations;
 
 
 using System;
+using ArchiveManagement.BLL.Interfaces.Business;
+using ArchiveManagement.BLL.Implementations.Business;
+using ArchiveManagement.DAL.Interfaces.Business;
+using ArchiveManagement.DAL.Implementations.Business;
 
 
 
@@ -131,8 +135,8 @@ builder.Services.AddTransient<IFileservices, Fileservices>();
 builder.Services.AddTransient<IFolderDal, FolderDal>();
 builder.Services.AddTransient<ITypeDocumetsDal, TypeDocumetsDal>();
 builder.Services.AddTransient<IFilesDal, FilesDal>();
-
-
+builder.Services.AddTransient<IDocumentBusinessServices, DocumentBusinessServices>();
+builder.Services.AddTransient<IDocumentBusinessDal, DocumentBusinessDal>();
 
 
 

@@ -14,7 +14,7 @@ namespace ArchiveManagement.BLL.Interfaces
         string GetFolderPathById(string id);
         bool IfExistfolderByid(string id);
         string  GetIdFolderByName(string id);
-        List<Folder> GetAllFolder();
+        object GetAllFolder();
         List<Folder> GetAllFolderOfThisfolder(string id);
     }
 }

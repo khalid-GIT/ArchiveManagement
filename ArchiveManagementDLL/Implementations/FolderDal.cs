@@ -47,7 +47,7 @@ namespace ArchiveManagement.DAL.Implementations
             return null;
         }
 
-        public List<Folder> GetAllFolder()
+        public object GetAllFolder()
         {
             var folder = _context.Folders.ToList();
             return folder;

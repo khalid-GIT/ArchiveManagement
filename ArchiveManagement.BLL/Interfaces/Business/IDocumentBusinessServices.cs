@@ -11,5 +11,6 @@ namespace ArchiveManagement.BLL.Interfaces.Business
     public  interface IDocumentBusinessServices
     {
         Task<bool> UpdateDocuments(DocumentsDto updatedDoc);
+        Task<List<DocumentBusiness>> GetDcumetsBusinessByIdPrentFolder(string id);
     }
 }

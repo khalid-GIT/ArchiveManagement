@@ -26,7 +26,7 @@ namespace ArchiveManagement.DAL.Context
         public DbSet<Tier> Tiers { get; set; }
         public DbSet<Folder> Folders { get; set; }
         public DbSet<Files> Files { get; set; }
-        public DbSet<TypeDocuments> TypeDocumetsBusiness { get; set; }
+        //public DbSet<TypeDocuments> TypeDocumetsBusiness { get; set; }
         public DbSet<DocumentBusiness> DocumentBusiness { get; set; }
         public DbSet<ModeReglement> ModeReglements { get; set; } 
         public DbSet<FamilleDocuments> FamilleDocuments { get; set; }

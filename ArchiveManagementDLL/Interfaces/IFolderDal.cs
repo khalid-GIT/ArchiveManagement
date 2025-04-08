@@ -13,7 +13,7 @@ namespace ArchiveManagement.DAL.Interfaces
         string GetFolderPathById(string id);
         string GetIdFolderByName(string name);
         bool IfExistfolderByid(string id);
-        List<Folder> GetAllFolder();
+        object GetAllFolder();
         List<Folder> GetAllFolderOfThisfolder(string id);
 
     }
