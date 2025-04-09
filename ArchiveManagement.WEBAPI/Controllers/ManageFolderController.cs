@@ -29,7 +29,7 @@ namespace ArchiveManagement.WEBAPI.Controllers
 
         [HttpPost("CreatFolder")]
 
-        public object CreatFolder(string FolderName, string? parentFolderPath, string TypeDocument)
+        public object CreatFolder(string FolderName, string? parentFolderPath, string idfamilleDocuments)
         {
             string roots = _configuration["RootPath"];
             string idroot = parentFolderPath != null ? parentFolderPath : _folderServices.GetIdFolderByName("root");
@@ -48,7 +48,7 @@ namespace ArchiveManagement.WEBAPI.Controllers
                 }
                 if (_folderServices.GetIdFolderByName("root") == null)
                 {
-                    var resultsav = _folderServices.SavePath(roots, "root", null, TypeDocument);
+                    var resultsav = _folderServices.SavePath(roots, "root", null, idfamilleDocuments);
                 }
             }
             else
@@ -78,7 +78,7 @@ namespace ArchiveManagement.WEBAPI.Controllers
                         DirectoryInfo directory = Directory.CreateDirectory(pathToNewFolder);
                     }
                 }
-                var resultsave = _folderServices.SavePath(pathToNewFolder, FolderName, idroot, TypeDocument);
+                var resultsave = _folderServices.SavePath(pathToNewFolder, FolderName, idroot, idfamilleDocuments);
             }
             catch (IOException ioex)
             {

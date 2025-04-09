@@ -25,7 +25,7 @@ namespace ArchiveManagement.DAL.Entities
         public string? idParent { get; set; }
 
         [ForeignKey("[FamilleDocuments]")]
-        public string? idfamilleDocuments { get; set; }
+        public string? FamilleDocumentsid { get; set; }
         public FamilleDocuments FamilleDocuments { get; set; }
     }
 }

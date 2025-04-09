@@ -13,5 +13,6 @@ namespace ArchiveManagement.BLL.Dtos
         public string ?Description { get; set; }
         public DateTime? CreatedOn { get; set; }
         public string FolderPath { get; set; }
+        public string? FamilleDocumentsid { get; set; }
     }
 }
