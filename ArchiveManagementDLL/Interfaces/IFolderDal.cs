@@ -15,6 +15,7 @@ namespace ArchiveManagement.DAL.Interfaces
         bool IfExistfolderByid(string id);
         object GetAllFolder();
         List<Folder> GetAllFolderOfThisfolder(string id);
-
+        Task<Folder> FolderByid(string id);
+        Task UpdateAsync(Folder folder);
     }
 }

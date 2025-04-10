@@ -36,7 +36,16 @@ namespace ArchiveManagement.DAL.Implementations
                 return false;
             }
         }
-
+        public async Task<Folder> FolderByid(string id)
+        {
+            var folder = _context.Folders.Where(c => c.id == id).FirstOrDefault();
+            return folder;
+        }
+        public async Task UpdateAsync(Folder folder)
+        {
+            _context.Folders.Update(folder);
+            await _context.SaveChangesAsync();
+        }
         public string GetIdFolderByName(string name)
         {
             var folder = _context.Folders.Where(c => c.Name == name).FirstOrDefault();

@@ -69,7 +69,15 @@ namespace ArchiveManagement.BLL.Implementations
             return _folderDal.IfExistfolderByid(id);
 
         }
-       
+        public async Task<bool> UpdateFolderAsync(string id, UpdateFolderDto dto)
+        {
+            var folder = await _folderDal.FolderByid(id);
+            if (folder == null) return false;
+
+            folder.Name = dto.Name;
+            await _folderDal.UpdateAsync(folder);
+            return true;
+        }
         public string GetIdFolderByName(string name)
         {
 

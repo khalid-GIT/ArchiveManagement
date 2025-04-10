@@ -1,4 +1,5 @@
-﻿using ArchiveManagement.DAL.Entities;
+﻿using ArchiveManagement.BLL.Dtos;
+using ArchiveManagement.DAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -16,5 +17,6 @@ namespace ArchiveManagement.BLL.Interfaces
         string  GetIdFolderByName(string id);
         object GetAllFolder();
         List<Folder> GetAllFolderOfThisfolder(string id);
+        Task<bool> UpdateFolderAsync(string id, UpdateFolderDto dto);
     }
 }

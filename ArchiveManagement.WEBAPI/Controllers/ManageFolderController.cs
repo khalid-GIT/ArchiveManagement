@@ -9,6 +9,7 @@ using ArchiveManagement.DAL.Entities;
 using Google.Protobuf.WellKnownTypes;
 using ArchiveManagement.WEBAPI.Models;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.EntityFrameworkCore;
 
 namespace ArchiveManagement.WEBAPI.Controllers
 {
@@ -29,67 +30,89 @@ namespace ArchiveManagement.WEBAPI.Controllers
 
         [HttpPost("CreatFolder")]
 
-        public object CreatFolder(string FolderName, string? parentFolderPath, string idfamilleDocuments)
+        public object CreatFolder([FromBody] CreateFolderDto dto)
         {
             string roots = _configuration["RootPath"];
-            string idroot = parentFolderPath != null ? parentFolderPath : _folderServices.GetIdFolderByName("root");
-            string FolderPath = string.Empty;
 
-            if (parentFolderPath == null)
-            {
-                if (!Directory.Exists(roots))
-                {
-                    return new ResponseModel
+            //if (string.IsNullOrWhiteSpace(dto.FolderName))
+            //    return BadRequest(new { message = "Le nom du dossier est requis." });
+
+            //var folder = new Folder
+            //{
+            //    id = Guid.NewGuid().ToString(),
+            //    Name = dto.FolderName,
+            //    idParent = dto.ParentFolderId,
+            //    CreatedOn = DateTime.Now
+            //};
+
+            //_context.Folders.Add(folder);
+            //await _context.SaveChangesAsync();
+
+            //return Ok(folder);
+
+
+            //string idroot = parentFolderPath != null ? parentFolderPath : _folderServices.GetIdFolderByName("root");
+            //string FolderPath = string.Empty;
+
+            //if (parentFolderPath == null)
+            //{
+            //    if (!Directory.Exists(roots))
+            //    {
+            //        return new ResponseModel
+            //        {
+            //            Status = "Error",
+            //            Message = "Root not exist"
+            //        };
+            //        // return "Root not exist";
+            //    }
+            //    if (_folderServices.GetIdFolderByName("root") == null)
+            //    {
+            //        var resultsav = _folderServices.SavePath(roots, "root", null, idfamilleDocuments);
+            //    }
+            //}
+            //else
+            //{
+            //    FolderPath = _folderServices.GetFolderPathById(parentFolderPath);
+            //}
+            //string pathToNewFolder = string.Empty;
+            //string creatFolder = string.Empty;
+            //try
+            //{
+            //    if (!Directory.Exists(FolderPath != null ? FolderPath + "\\" + FolderName : roots + "\\" + FolderName))
+            //    {
+            //        if (FolderPath.Trim() != "" && !FolderPath.IsNullOrEmpty() && FolderPath.Trim() !=null)
+            //        {
+
+            //            creatFolder = FolderPath ;
+
+            //        }
+            //        else
+            //        {
+            //            creatFolder = roots;
+            //        }
+
+            //        pathToNewFolder = System.IO.Path.Combine(creatFolder, FolderName);
+            //        if (!Directory.Exists(pathToNewFolder))
+            //        {
+            //            DirectoryInfo directory = Directory.CreateDirectory(pathToNewFolder);
+            //        }
+            //    }
+            //    var resultsave = _folderServices.SavePath(pathToNewFolder, FolderName, idroot, idfamilleDocuments);
+            //}
+            //catch (IOException ioex)
+            //{
+            //    Console.WriteLine(ioex.Message);
+            //}
+            //return new ResponseModel
+            //{
+            //    Status = "Success",
+            //    Message = "Folder : " + pathToNewFolder + " Created"
+            //};
+            return new ResponseModel
                     {
                         Status = "Error",
                         Message = "Root not exist"
-                    };
-                    // return "Root not exist";
-                }
-                if (_folderServices.GetIdFolderByName("root") == null)
-                {
-                    var resultsav = _folderServices.SavePath(roots, "root", null, idfamilleDocuments);
-                }
-            }
-            else
-            {
-                FolderPath = _folderServices.GetFolderPathById(parentFolderPath);
-            }
-            string pathToNewFolder = string.Empty;
-            string creatFolder = string.Empty;
-            try
-            {
-                if (!Directory.Exists(FolderPath != null ? FolderPath + "\\" + FolderName : roots + "\\" + FolderName))
-                {
-                    if (FolderPath.Trim() != "" && !FolderPath.IsNullOrEmpty() && FolderPath.Trim() !=null)
-                    {
-
-                        creatFolder = FolderPath ;
-
-                    }
-                    else
-                    {
-                        creatFolder = roots;
-                    }
-
-                    pathToNewFolder = System.IO.Path.Combine(creatFolder, FolderName);
-                    if (!Directory.Exists(pathToNewFolder))
-                    {
-                        DirectoryInfo directory = Directory.CreateDirectory(pathToNewFolder);
-                    }
-                }
-                var resultsave = _folderServices.SavePath(pathToNewFolder, FolderName, idroot, idfamilleDocuments);
-            }
-            catch (IOException ioex)
-            {
-                Console.WriteLine(ioex.Message);
-            }
-            return new ResponseModel
-            {
-                Status = "Success",
-                Message = "Folder : " + pathToNewFolder + " Created"
-            };
-            //  return pathToNewFolder;
+                  };
         }
         [HttpDelete("delete")]
         public object folderDelete(string id)
@@ -195,6 +218,16 @@ namespace ArchiveManagement.WEBAPI.Controllers
             }
 
             return listefolder;
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateFolder(string id, [FromBody] UpdateFolderDto dto)
+        {
+            var result = await _folderServices.UpdateFolderAsync(id, dto);
+            if (!result)
+                return NotFound(new { message = "Dossier introuvable." });
+
+            return Ok(new { message = "Dossier mis à jour avec succès." });
         }
     }
 }
