@@ -24,8 +24,8 @@ namespace ArchiveManagement.DAL.Entities
         [ForeignKey("Folder")]
         public string? idParent { get; set; }
 
-        [ForeignKey("[FamilleDocuments]")]
-        public string? FamilleDocumentsid { get; set; }
-        public FamilleDocuments FamilleDocuments { get; set; }
+        //[ForeignKey("[FamilleDocuments]")]
+        //public string? FamilleDocumentsid { get; set; }
+        //public FamilleDocuments FamilleDocuments { get; set; }
     }
 }

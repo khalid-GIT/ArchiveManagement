@@ -32,11 +32,18 @@ namespace ArchiveManagement.WEBAPI.Controllers
 
         public object CreatFolder([FromBody] CreateFolderDto dto)
         {
-            string roots = _configuration["RootPath"];
+            try
+            {
+                string roots = _configuration["RootPath"];
 
-            //if (string.IsNullOrWhiteSpace(dto.FolderName))
-            //    return BadRequest(new { message = "Le nom du dossier est requis." });
-
+            if (string.IsNullOrWhiteSpace(dto.FolderName))
+                return BadRequest(new { message = "Le nom du dossier est requis." });
+               var result  = _folderServices.CreatFolder(dto);
+            return new ResponseModel
+            {
+                Status = "Success",
+                Message = "Folder : " + dto.FolderName + " Created"
+            };
             //var folder = new Folder
             //{
             //    id = Guid.NewGuid().ToString(),
@@ -108,11 +115,21 @@ namespace ArchiveManagement.WEBAPI.Controllers
             //    Status = "Success",
             //    Message = "Folder : " + pathToNewFolder + " Created"
             //};
-            return new ResponseModel
-                    {
-                        Status = "Error",
-                        Message = "Root not exist"
-                  };
+            //return new ResponseModel
+            //        {
+            //            Status = "Error",
+            //            Message = "Root not exist"
+            //      };
+        }
+            catch (IOException ioex)
+            {
+                Console.WriteLine(ioex.Message);
+                return new ResponseModel
+                {
+                    Status = "Error",
+                    Message = ioex.Message
+                };
+            }
         }
         [HttpDelete("delete")]
         public object folderDelete(string id)

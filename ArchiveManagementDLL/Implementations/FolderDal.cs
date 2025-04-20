@@ -55,11 +55,31 @@ namespace ArchiveManagement.DAL.Implementations
             }
             return null;
         }
-
-        public object GetAllFolder()
+        public async Task<bool> CreatFolder(Folder folder_)
         {
-            var folder = _context.Folders.ToList();
-            return folder;
+
+            var folder = new Folder
+            {
+                id = Guid.NewGuid().ToString(),
+                Name = folder_.Name,
+                idParent = folder_.idParent,
+                CreatedOn = DateTime.Now
+            };
+
+            _context.Folders.Add(folder);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        public List<Folder> GetAllFolder()
+        {
+            if (_context.Folders == null)
+            {
+                // Return an empty list if Folders is null
+                return new List<Folder>();
+            }
+
+            var folders = _context.Folders.ToList();
+            return folders;
 
         }  
         public List<Folder> GetAllFolderOfThisfolder(string id)

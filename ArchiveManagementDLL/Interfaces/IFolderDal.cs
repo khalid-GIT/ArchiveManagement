@@ -13,9 +13,10 @@ namespace ArchiveManagement.DAL.Interfaces
         string GetFolderPathById(string id);
         string GetIdFolderByName(string name);
         bool IfExistfolderByid(string id);
-        object GetAllFolder();
+        List<Folder>  GetAllFolder();
         List<Folder> GetAllFolderOfThisfolder(string id);
         Task<Folder> FolderByid(string id);
         Task UpdateAsync(Folder folder);
+        Task<bool> CreatFolder(Folder folder_);
     }
 }

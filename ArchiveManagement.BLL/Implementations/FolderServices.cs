@@ -43,7 +43,7 @@ namespace ArchiveManagement.BLL.Implementations
                     FolderPath = path,
                     Name = name,
                     Description = name,
-                    FamilleDocumentsid = idfamilleDocuments,
+                    //FamilleDocumentsid = idfamilleDocuments,
                     idParent = idParent
                 };
 
@@ -64,7 +64,18 @@ namespace ArchiveManagement.BLL.Implementations
         {
             return _folderDal.GetFolderPathById(idParent);
         }
-        public bool IfExistfolderByid(string id)
+        public async Task<bool> CreatFolder(CreateFolderDto folder_)
+
+        {
+            var folder = new Folder
+            {
+                Name=folder_.FolderName,
+                idParent=folder_.ParentFolderId,
+            };
+
+            return await _folderDal.CreatFolder(folder);
+        }
+            public bool IfExistfolderByid(string id)
         {
             return _folderDal.IfExistfolderByid(id);
 
@@ -83,7 +94,7 @@ namespace ArchiveManagement.BLL.Implementations
 
             return _folderDal.GetIdFolderByName(name);
         }
-        public object GetAllFolder()
+        public List<Folder> GetAllFolder()
         {
             
             return _folderDal.GetAllFolder();

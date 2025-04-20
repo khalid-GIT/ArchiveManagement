@@ -11,12 +11,13 @@ namespace ArchiveManagement.BLL.Interfaces
 {
     public interface IFolderServices
     {
-        bool SavePath(string path, string name, string idParent,string idfamilleDocuments);
+        bool SavePath(string path, string name, string idParent, string idfamilleDocuments);
         string GetFolderPathById(string id);
         bool IfExistfolderByid(string id);
-        string  GetIdFolderByName(string id);
-        object GetAllFolder();
+        string GetIdFolderByName(string id);
+        List<Folder> GetAllFolder();
         List<Folder> GetAllFolderOfThisfolder(string id);
         Task<bool> UpdateFolderAsync(string id, UpdateFolderDto dto);
+        Task<bool> CreatFolder(CreateFolderDto folder_);
     }
 }

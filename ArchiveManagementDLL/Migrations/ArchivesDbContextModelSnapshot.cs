@@ -74,10 +74,6 @@ namespace ArchiveManagement.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("FamilleDocumentsid")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)");
-
                     b.Property<string>("FolderPath")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -89,12 +85,7 @@ namespace ArchiveManagement.DAL.Migrations
                     b.Property<string>("idParent")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("idfamilleDocuments")
-                        .HasColumnType("longtext");
-
                     b.HasKey("id");
-
-                    b.HasIndex("FamilleDocumentsid");
 
                     b.ToTable("Folders");
                 });
@@ -410,17 +401,6 @@ namespace ArchiveManagement.DAL.Migrations
                     b.ToTable("ReglementsDocumentsBusiness", (string)null);
                 });
 
-            modelBuilder.Entity("ArchiveManagement.DAL.Entities.Folder", b =>
-                {
-                    b.HasOne("ArchiveManagement.DAL.Entities.FamilleDocuments", "FamilleDocuments")
-                        .WithMany("Folder")
-                        .HasForeignKey("FamilleDocumentsid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("FamilleDocuments");
-                });
-
             modelBuilder.Entity("ArchiveManagement.DAL.Entities.Settings.Tier", b =>
                 {
                     b.HasOne("ArchiveManagement.DAL.Entities.Settings.City", "Citys")
@@ -521,11 +501,6 @@ namespace ArchiveManagement.DAL.Migrations
                     b.Navigation("ModeReglements");
 
                     b.Navigation("Tiers");
-                });
-
-            modelBuilder.Entity("ArchiveManagement.DAL.Entities.FamilleDocuments", b =>
-                {
-                    b.Navigation("Folder");
                 });
 
             modelBuilder.Entity("ArchiveManagement.DAL.Entities.Settings.City", b =>
